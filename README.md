@@ -4,33 +4,34 @@ My solutions for the Advent of Code 2021 written in Kotlin.
 This repo is based my [Kotlin template for AoC](https://github.com/henningBunk/advent-of-code-kotlin-template)
 
 ## Logbook
-###  Day 1
+###  [Day 1](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day01/Day01.kt)
 Let's begin :-)  
-First I followed a plan of giving `fold` a try but was bummed that I only got the acc and not to values to compare with each other. Therefore, I had to handle list indices. Solved it though. Cleaned it up with some extension functions and without using fold, but rather with list transforms.  
-###  Day 2
-###  Day 3
-###  Day 4
-###  Day 5
-###  Day 6
-###  Day 7
-###  Day 8
-###  Day 9
-###  Day 10
-###  Day 11
-###  Day 12
-###  Day 13
-###  Day 14
-###  Day 15
-###  Day 16
-###  Day 17
-###  Day 18
-###  Day 19
-###  Day 20
-###  Day 21
-###  Day 22
-###  Day 23
-###  Day 24
-###  Day 25
+First I followed a plan of giving `fold` a try but was bummed that I only got the acc and not two values to compare with each other. Therefore, I had to handle list indices. Solved it though. Cleaned it up with some extension functions and without using fold, but rather with list transforms.  
+
+###  [Day 2](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day02/Day02.kt)
+###  [Day 3](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day03/Day03.kt)
+###  [Day 4](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day04/Day04.kt)
+###  [Day 5](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day05/Day05.kt)
+###  [Day 6](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day06/Day06.kt)
+###  [Day 7](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day07/Day07.kt)
+###  [Day 8](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day08/Day08.kt)
+###  [Day 9](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day09/Day09.kt)
+###  [Day 10](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day10/Day10.kt)
+###  [Day 11](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day11/Day11.kt)
+###  [Day 12](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day12/Day12.kt)
+###  [Day 13](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day13/Day13.kt)
+###  [Day 14](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day14/Day14.kt)
+###  [Day 15](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day15/Day15.kt)
+###  [Day 16](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day16/Day16.kt)
+###  [Day 17](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day17/Day17.kt)
+###  [Day 18](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day18/Day18.kt)
+###  [Day 19](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day19/Day19.kt)
+###  [Day 20](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day20/Day20.kt)
+###  [Day 21](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day21/Day21.kt)
+###  [Day 22](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day22/Day22.kt)
+###  [Day 23](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day23/Day23.kt)
+###  [Day 24](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day24/Day24.kt)
+###  [Day 25](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day25/Day25.kt)
 
 
 
