@@ -5,6 +5,8 @@ This repo is based my [Kotlin template for AoC](https://github.com/henningBunk/a
 
 ## Logbook
 ###  Day 1
+Let's begin :-)  
+First I followed a plan of giving `fold` a try but was bummed that I only got the acc and not to values to compare with each other. Therefore, I had to handle list indices. Solved it though. Cleaned it up with some extension functions and without using fold, but rather with list transforms.  
 ###  Day 2
 ###  Day 3
 ###  Day 4
