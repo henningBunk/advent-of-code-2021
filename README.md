@@ -6,7 +6,9 @@ This repo is based my [Kotlin template for AoC](https://github.com/henningBunk/a
 ## Logbook
 ###  [Day 1](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day01/Day01.kt)
 Let's begin :-)  
-First I followed a plan of giving `fold` a try but was bummed that I only got the acc and not two values to compare with each other. Therefore, I had to handle list indices. Solved it though. Cleaned it up with some extension functions and without using fold, but rather with list transforms.  
+First I followed a plan of giving `fold` a try but was bummed that I only got the acc and not two values to compare with each other. Therefore, I had to handle list indices. Solved it though. Cleaned it up with some extension functions and without using fold, but rather with list transforms.
+
+After looking at other solutions I learned about the `.windowed` function and implemented an alternative solution with it. 
 
 ###  [Day 2](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day02/Day02.kt)
 ###  [Day 3](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day03/Day03.kt)

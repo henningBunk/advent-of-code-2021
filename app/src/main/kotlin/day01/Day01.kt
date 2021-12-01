@@ -10,9 +10,10 @@ fun main(args: Array<String>) {
     val input = InputRepo(args.readSessionCookie()).get(day = day)
 
     solve(day, input, ::solveDay01Part1, ::solveDay01Part2)
+    solve(day, input, ::solveDay01Part1Windowed, ::solveDay01Part2Windowed)
 }
 
-
+// Original solution
 fun solveDay01Part1(input: List<String>): Int = input
     .map { it.toInt() }
     .countDepthIncreases()
@@ -31,3 +32,17 @@ private fun List<Int>.countDepthIncreases(): Int =
     mapIndexed { index, value ->
         if (index != 0 && get(index - 1) < value) 1 else 0
     }.sum()
+
+
+// Alternative solution using .windowed
+fun solveDay01Part1Windowed(input: List<String>): Int = input
+    .map { it.toInt() }
+    .windowed(2)
+    .count { it[0] < it[1] }
+
+fun solveDay01Part2Windowed(input: List<String>): Int = input
+    .map { it.toInt() }
+    .windowed(3)
+    .map { it.sum() }
+    .windowed(2)
+    .count { it[0] < it[1] }
