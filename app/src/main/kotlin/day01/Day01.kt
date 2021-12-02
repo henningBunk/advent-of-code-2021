@@ -37,12 +37,12 @@ private fun List<Int>.countDepthIncreases(): Int =
 // Alternative solution using .windowed
 fun solveDay01Part1Windowed(input: List<String>): Int = input
     .map { it.toInt() }
-    .windowed(2)
-    .count { it[0] < it[1] }
+    .countDepthIncreases(2)
 
 fun solveDay01Part2Windowed(input: List<String>): Int = input
     .map { it.toInt() }
-    .windowed(3)
-    .map { it.sum() }
-    .windowed(2)
-    .count { it[0] < it[1] }
+    .countDepthIncreases(4)
+
+fun List<Int>.countDepthIncreases(stepWidth: Int): Int =
+    windowed(stepWidth)
+    .count { it.first() < it.last() }

@@ -11,6 +11,8 @@ First I followed a plan of giving `fold` a try but was bummed that I only got th
 After looking at other solutions I learned about the `.windowed` function and implemented an alternative solution with it. 
 
 ###  [Day 2](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day02/Day02.kt)
+I wanted to solve it only by transforming the input data without creating variables. It was a challenge but it worked quite well. I introduced two classes for the second part to make it more readable.
+
 ###  [Day 3](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day03/Day03.kt)
 ###  [Day 4](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day04/Day04.kt)
 ###  [Day 5](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day05/Day05.kt)
