@@ -11,7 +11,6 @@ fun main(args: Array<String>) {
     solve(day, input, ::solveDay03Part1, ::solveDay03Part2)
 }
 
-
 fun solveDay03Part1(input: List<String>): Int {
     val gamma = input
         .map { it.toCharArray().toList() }
@@ -19,7 +18,7 @@ fun solveDay03Part1(input: List<String>): Int {
         .map { it.findMostCommon() }
         .joinToBitString().also { println(it) }
 
-    val epsilon = gamma.invert()
+    val epsilon = gamma.invertBits()
 
     return gamma.toInt(2) * epsilon.toInt(2)
 }
@@ -62,23 +61,21 @@ fun List<Char>.findMostCommon(): Char =
 fun List<Char>.findLeastCommon(): Char =
     if (count { it == '1' } >= count { it == '0' }) '0' else '1'
 
-fun String.invert(): String = toList()
+fun String.invertBits(): String = toList()
     .map { if (it == '0') '1' else '0' }
-    .joinToString(separator = "")
+    .joinToBitString()
 
 fun List<Char>.joinToBitString(): String = joinToString(separator = "")
 
-fun oxygenGeneratorRatingBitCriteria(bit: List<Char>, diagnosticReport: List<List<Char>>, index: Int): Boolean {
-    val mostCommonForIndex = diagnosticReport
-        .transpose()
+fun oxygenGeneratorRatingBitCriteria(bit: List<Char>, transposedDiagnosticReport: List<List<Char>>, index: Int): Boolean {
+    val mostCommonForIndex = transposedDiagnosticReport
         .map { it.findMostCommon() }
         .get(index)
     return bit[index] == mostCommonForIndex
 }
 
-fun co2ScrubberRatingBitCriteria(bit: List<Char>, diagnosticReport: List<List<Char>>, index: Int): Boolean {
-    val leastCommonForIndex = diagnosticReport
-        .transpose()
+fun co2ScrubberRatingBitCriteria(bit: List<Char>, transposedDiagnosticReport: List<List<Char>>, index: Int): Boolean {
+    val leastCommonForIndex = transposedDiagnosticReport
         .map { it.findLeastCommon() }
         .get(index)
     return bit[index] == leastCommonForIndex
@@ -90,8 +87,9 @@ fun findRecursive(
     criteria: (List<Char>, List<List<Char>>, Int) -> Boolean,
 ): List<Char> {
     println("Index: $index, Size: ${input.size}")
+    val transposedInput = input.transpose()
+    val filteredInput = input.filter { criteria(it, transposedInput, index) }
 
-    val filteredInput = input.filter { criteria(it, input, index) }
     return when (filteredInput.size) {
         1 -> filteredInput.first()
         else -> findRecursive(filteredInput, index + 1, criteria)
