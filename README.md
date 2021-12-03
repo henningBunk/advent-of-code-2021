@@ -14,6 +14,10 @@ After looking at other solutions I learned about the `.windowed` function and im
 I wanted to solve it only by transforming the input data without creating variables. It was a challenge but it worked quite well. I introduced two classes for the second part to make it more readable.
 
 ###  [Day 3](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day03/Day03.kt)
+Wow, that was harder than I expected. I took forever for that `.transpose()` function and regretted for the first time not using Python.  
+For part 2 I could hone my rusty recursion skills which I only used at AoC outside of university.
+I think I should come back to this problem and work on a simpler and cleaner solution.
+
 ###  [Day 4](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day04/Day04.kt)
 ###  [Day 5](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day05/Day05.kt)
 ###  [Day 6](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day06/Day06.kt)
