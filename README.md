@@ -18,7 +18,10 @@ Wow, that was harder than I expected. I took forever for that `.transpose()` fun
 For part 2 I could hone my rusty recursion skills which I only used at AoC outside of university.
 I think I should come back to this problem and work on a simpler and cleaner solution.
 
-###  [Day 4](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day04/Day04.kt)
+###  [Day 4](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day04t) / [Tests](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/test/kotlin/day04/Day04Test.kt)
+Nothing special on this day. I tried to write clean and tested code. I am quite happy with the results and even worked test driven for some parts.   
+The previous days prepared me well for writing the winning conditions which were quite fun to write. I also wrote one for diagonals which I later discovered were unnecessary. 
+
 ###  [Day 5](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day05/Day05.kt)
 ###  [Day 6](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day06/Day06.kt)
 ###  [Day 7](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day07/Day07.kt)
