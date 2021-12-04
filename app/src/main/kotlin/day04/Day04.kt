@@ -15,12 +15,10 @@ fun main(args: Array<String>) {
 fun solveDay04Part1(input: List<String>): Int {
     val (drawnNumbers, boards) = readInput(input)
 
-    do {
-        boards.forEach { board ->
-            board.check(drawnNumbers.first())
-        }
-        drawnNumbers.removeFirst()
-    } while (boards.none { it.hasWon() })
+    drawnNumbers.takeWhile {
+        boards.forEach { board -> board.check(it) }
+        boards.none { it.hasWon() }
+    }
 
     return boards.find { board -> board.hasWon() }?.getScore() ?: -1
 }
@@ -29,18 +27,16 @@ fun solveDay04Part1(input: List<String>): Int {
 fun solveDay04Part2(input: List<String>): Int {
     val (drawnNumbers, boards) = readInput(input)
 
-    do {
-        boards.forEach { board ->
-            board.check(drawnNumbers.first())
-        }
-        drawnNumbers.removeFirst()
-    } while (boards.count { !it.hasWon() } > 1)
+    drawnNumbers.takeWhile {
+        boards.forEach { board -> board.check(it) }
+        boards.count { !it.hasWon() } > 1
+    }
 
     val lastBoardToWin = boards.find { !it.hasWon() }
-    do {
-        lastBoardToWin?.check(drawnNumbers.first())
-        drawnNumbers.removeFirst()
-    } while (lastBoardToWin?.hasWon() == false)
+    drawnNumbers.takeWhile {
+        lastBoardToWin?.check(it)
+        lastBoardToWin?.hasWon() == false
+    }
 
     return lastBoardToWin?.getScore() ?: -1
 }
