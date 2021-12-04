@@ -254,7 +254,7 @@ class Day04Test : FreeSpec({
                     check(44)
                     check(55)
                 }
-//                boardA.hasWon() shouldBe true
+                boardA.hasWon() shouldBe true
                 val boardB = Board(sampleBoard, doDiagonalsCount = true).apply {
                     check(15)
                     check(24)
