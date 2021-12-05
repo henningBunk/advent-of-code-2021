@@ -6,7 +6,6 @@ import common.solve
 import kotlin.math.sign
 
 typealias VentMap = List<MutableList<Int>>
-typealias VentLine = Pair<Point, Point>
 
 fun main(args: Array<String>) {
     val day = 5
@@ -17,37 +16,33 @@ fun main(args: Array<String>) {
 
 // The solution for day 5 part 1 is: 7468
 fun solveDay05Part1(input: List<String>): Int = input
-    .parse()
-    .filterDiagonals()
+    .parseToLines()
+    .filter { line -> !line.isDiagonal() }
     .countProblematicVents()
 
 //The solution for day 5 part 2 is: 22364
 fun solveDay05Part2(input: List<String>): Int = input
-    .parse()
+    .parseToLines()
     .countProblematicVents()
 
-fun List<String>.parse(): List<VentLine> = map {
+fun List<String>.parseToLines(): List<Line> = map {
     val (fromX, fromY, toX, toY) = """(\d+),(\d+) -> (\d+),(\d+)""".toRegex().find(it)?.destructured
         ?: error("Parsing error")
-    Pair(Point(fromX.toInt(), fromY.toInt()), Point(toX.toInt(), toY.toInt()))
+    Line(Point(fromX.toInt(), fromY.toInt()), Point(toX.toInt(), toY.toInt()))
 }
 
-fun List<VentLine>.filterDiagonals(): List<Pair<Point, Point>> =
-    this.filter { (from, to) -> from.x == to.x || from.y == to.y }
-
-fun List<VentLine>.countProblematicVents(): Int {
+fun List<Line>.countProblematicVents(): Int {
     val mapSize = determineMapSize(this)
-    return fold(emptyMap(mapSize)) { ventMap, ventLine ->
-        ventMap.drawLine(ventLine)
-        ventMap
+    return fold(emptyMap(mapSize)) { ventMap, line ->
+        ventMap.apply { drawLine(line) }
     }.flatten().count { it > 1 }
 }
 
-fun determineMapSize(lines: List<VentLine>): Point = lines
-    .fold(Point(0, 0)) { acc, (from, to) ->
+fun determineMapSize(lines: List<Line>): Point = lines
+    .fold(Point(0, 0)) { acc, (a, b) ->
         Point(
-            listOf(acc.x, from.x, to.x).maxOrNull() ?: 0,
-            listOf(acc.y, from.y, to.y).maxOrNull() ?: 0
+            listOf(acc.x, a.x, b.x).maxOrNull() ?: 0,
+            listOf(acc.y, a.y, b.y).maxOrNull() ?: 0
         )
     }
     .let { Point(it.x + 1, it.y + 1) }
@@ -56,7 +51,7 @@ fun emptyMap(size: Point): VentMap {
     return List(size.y) { MutableList(size.x) { 0 } }
 }
 
-fun VentMap.drawLine(line: VentLine) {
+fun VentMap.drawLine(line: Line) {
     fun addVent(point: Point) {
         this[point.y][point.x] += 1
     }
@@ -75,4 +70,8 @@ fun VentMap.drawLine(line: VentLine) {
 data class Point(val x: Int, val y: Int) {
     operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
     operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
+}
+
+data class Line(val a: Point, val b: Point) {
+    fun isDiagonal() = a.x != b.x && a.y != b.y
 }
