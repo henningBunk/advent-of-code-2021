@@ -39,13 +39,8 @@ fun List<Line>.countProblematicVents(): Int {
 }
 
 fun determineMapSize(lines: List<Line>): Point = lines
-    .fold(Point(0, 0)) { acc, (a, b) ->
-        Point(
-            listOf(acc.x, a.x, b.x).maxOrNull() ?: 0,
-            listOf(acc.y, a.y, b.y).maxOrNull() ?: 0
-        )
-    }
-    .let { Point(it.x + 1, it.y + 1) }
+    .flatMap { line -> listOf(line.a, line.b) }
+    .let { points -> Point(points.maxOf { it.x } + 1, points.maxOf {it.y} + 1) }
 
 fun emptyMap(size: Point): VentMap {
     return List(size.y) { MutableList(size.x) { 0 } }
