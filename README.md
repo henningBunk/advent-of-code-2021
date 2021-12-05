@@ -22,7 +22,9 @@ I think I should come back to this problem and work on a simpler and cleaner sol
 Nothing special on this day. I tried to write clean and tested code. I am quite happy with the results and even worked test driven for some parts.   
 The previous days prepared me well for writing the winning conditions which were quite fun to write. I also wrote one for diagonals which I later discovered were unnecessary. 
 
-###  [Day 5](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day05/Day05.kt)
+###  [Day 5](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day05/Day05.kt) / [Tests](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/test/kotlin/day05/Day05Test.kt)
+Again pretty straight forward today. I used a list of mutable lists to count the vents. I like how the extension functions make it very easy to read what's happening in the solve functions.
+
 ###  [Day 6](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day06/Day06.kt)
 ###  [Day 7](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day07/Day07.kt)
 ###  [Day 8](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day08/Day08.kt)
