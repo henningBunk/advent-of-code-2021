@@ -26,6 +26,8 @@ The previous days prepared me well for writing the winning conditions which were
 Again pretty straight forward today. I used a list of mutable lists to count the vents. I like how the extension functions make it very easy to read what's happening in the solve functions.
 
 ###  [Day 6](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day06/Day06.kt)
+My naive approach for part 1 could heat up the room pretty good for part 2.
+
 ###  [Day 7](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day07/Day07.kt)
 ###  [Day 8](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day08/Day08.kt)
 ###  [Day 9](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day09/Day09.kt)
