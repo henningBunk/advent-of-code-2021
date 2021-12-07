@@ -9,7 +9,8 @@ fun main(args: Array<String>) {
     val day = 7
     val input = InputRepo(args.readSessionCookie()).get(day = day)
 
-    solve(day, input, ::solveDay07Part1, ::solveDay07Part2MoreEfficient)
+    solve(day, input, ::solveDay07Part1, ::solveDay07Part2)
+    solve(day, input, ::solveDay07Part2MoreEfficient, ::solveDay07Part2EvenMoreEfficient)
 }
 
 // The solution for day 7 part 1 is: 352254
@@ -27,6 +28,7 @@ fun solveDay07Part2(input: List<String>): Int = calculateTotalFuelCosts(
     }
 )
 
+
 // The solution for day 7 part 2 is: 99053143
 // More effective solution. Runtime under 100 ms
 fun solveDay07Part2MoreEfficient(input: List<String>): Int = calculateTotalFuelCosts(
@@ -40,3 +42,14 @@ fun calculateTotalFuelCosts(horizontalPositions: List<Int>, fuelCostCalculation:
         .minOfOrNull { candidate ->
             horizontalPositions.sumOf { crab -> fuelCostCalculation(crab, candidate) }
         } ?: -1
+
+
+// The solution for day 7 part 2 is: 99053143
+// Even more effective solution! Runtime under 20 ms. Wow the higher order function takes a hefty toll
+fun solveDay07Part2EvenMoreEfficient(input: List<String>): Int {
+    val horizontalPositions = input.first().split(",").map { it.toInt() }
+    return (0..horizontalPositions.maxOrNull()!!)
+        .minOfOrNull { candidate ->
+            horizontalPositions.sumOf { crab -> fuelCost(abs(crab - candidate)) }
+        } ?: -1
+}
