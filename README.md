@@ -29,6 +29,9 @@ Again pretty straight forward today. I used a list of mutable lists to count the
 My naive approach for part 1 could heat up the room pretty good for part 2.
 
 ###  [Day 7](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day07/Day07.kt)
+Pretty happy with this one since it only took me only a few minutes and both tests were green on the first try, such a rare sight.  
+I wonder if I there is a sigma operand for the second calculation, I feel like there should be one. Also, the runtime is pretty slow since it's a brute force approach. But right now I don't feel like optimizing. 
+
 ###  [Day 8](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day08/Day08.kt)
 ###  [Day 9](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day09/Day09.kt)
 ###  [Day 10](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day10/Day10.kt)
