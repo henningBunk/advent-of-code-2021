@@ -25,10 +25,12 @@ fun solveDay08Part2_2(input: List<String>): Int = input.sumOf { line ->
         decoded[4] = codes.singleAndRemove(segments = 4)
         decoded[7] = codes.singleAndRemove(segments = 3)
         decoded[8] = codes.singleAndRemove(segments = 7)
+
+        decoded[9] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(4))
+        decoded[0] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(7))
+        decoded[6] = codes.singleAndRemove(segments = 6)
+
         decoded[3] = codes.singleAndRemove(segments = 5, containsAllSegments = decoded.getValue(1))
-        decoded[9] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(3))
-        decoded[6] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(4) - decoded.getValue(1))
-        decoded[0] = codes.singleAndRemove(segments = 6)
         decoded[5] = codes.singleAndRemove(segments = 5, containsAllSegments = decoded.getValue(4) - decoded.getValue(1))
         decoded[2] = codes.single()
 
