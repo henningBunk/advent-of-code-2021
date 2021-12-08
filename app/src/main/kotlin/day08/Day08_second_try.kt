@@ -3,6 +3,7 @@ package day08
 import common.InputRepo
 import common.readSessionCookie
 import common.solve
+import java.util.*
 
 fun main(args: Array<String>) {
     val day = 8
@@ -21,20 +22,19 @@ fun solveDay08Part2_2(input: List<String>): Int = input.sumOf { line ->
 
         val decoded: MutableMap<Int, Set<Char>> = mutableMapOf()
 
-        decoded[1] = codes.single { it.size == 2 }.also { codes.remove(it) }
-        decoded[4] = codes.single { it.size == 4 }.also { codes.remove(it) }
-        decoded[7] = codes.single { it.size == 3 }.also { codes.remove(it) }
-        decoded[8] = codes.single { it.size == 7 }.also { codes.remove(it) }
+        val wiring = Wiring(left)
 
-        decoded[3] = codes.single { it.size == 5 && it.containsAll(decoded[1]!!) }.also { codes.remove(it) }
-
-        decoded[9] = codes.single { it.size == 6 && it.containsAll(decoded[3]!!) }.also { codes.remove(it) }
-        decoded[6] = codes.single { it.size == 6 && it.containsAll(decoded[4]!!.minus(decoded[1]!!)) }
-            .also { codes.remove(it) }
-        decoded[0] = codes.single { it.size == 6 }.also { codes.remove(it) }
-
-        decoded[5] = codes.single { it.size == 5 && decoded[9]!!.containsAll(it) }.also { codes.remove(it) }
-        decoded[2] = codes.single { true }.also { codes.remove(it) }
+        decoded[1] = codes.singleAndRemove(segments = 2)
+        decoded[4] = codes.singleAndRemove(segments = 4)
+        decoded[7] = codes.singleAndRemove(segments = 3)
+        decoded[8] = codes.singleAndRemove(segments = 7)
+        decoded[3] = codes.singleAndRemove(segments = 5, sharesAllSegmentsWith = 1)
+        decoded[9] = codes.singleAndRemove(segments = 6) { it.containsAll(decoded.getValue(3)) }
+        decoded[6] =
+            codes.singleAndRemove(segments = 6) { it.containsAll(decoded.getValue(4).minus(decoded.getValue(1))) }
+        decoded[0] = codes.singleAndRemove(segments = 6)
+        decoded[5] = codes.singleAndRemove(segments = 5) { decoded.getValue(9).containsAll(it) }
+        decoded[2] = codes.single()
 
         right
             .split(" ")
@@ -42,4 +42,20 @@ fun solveDay08Part2_2(input: List<String>): Int = input.sumOf { line ->
             .joinToString("").also(::println)
             .toInt()
     }
+}
+
+private fun MutableSet<SortedSet<Char>>.singleAndRemove(
+    segments: Int,
+    sharesAllSegmentsWith: Int? = null,
+    predicate: (SortedSet<Char>) -> Boolean = { true }
+): Set<Char> = single {
+    it.size == segments && it.containsAll(this) }
+}.also { this.remove(it) }
+
+private class Wiring(
+    inputLine: String
+) {
+    val codes = inputLine.split(" ").map { it.toSortedSet() }.toMutableSet()
+
+    val decoded: MutableMap<Int, Set<Char>> = mutableMapOf()
 }
