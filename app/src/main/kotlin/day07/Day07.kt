@@ -4,6 +4,7 @@ import common.InputRepo
 import common.readSessionCookie
 import common.solve
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 fun main(args: Array<String>) {
     val day = 7
@@ -11,6 +12,7 @@ fun main(args: Array<String>) {
 
     solve(day, input, ::solveDay07Part1, ::solveDay07Part2)
     solve(day, input, ::solveDay07Part2MoreEfficient, ::solveDay07Part2EvenMoreEfficient)
+    solve(day, input, ::solveDay07Part2ByAverage, ::solveDay07Part2ByAverage)
 }
 
 // The solution for day 7 part 1 is: 352254
@@ -28,7 +30,6 @@ fun solveDay07Part2(input: List<String>): Int = calculateTotalFuelCosts(
     }
 )
 
-
 // The solution for day 7 part 2 is: 99053143
 // More effective solution. Runtime under 100 ms
 fun solveDay07Part2MoreEfficient(input: List<String>): Int = calculateTotalFuelCosts(
@@ -43,7 +44,6 @@ fun calculateTotalFuelCosts(horizontalPositions: List<Int>, fuelCostCalculation:
             horizontalPositions.sumOf { crab -> fuelCostCalculation(crab, candidate) }
         } ?: -1
 
-
 // The solution for day 7 part 2 is: 99053143
 // Even more effective solution! Runtime under 20 ms. Wow the higher order function takes a hefty toll
 fun solveDay07Part2EvenMoreEfficient(input: List<String>): Int {
@@ -52,4 +52,12 @@ fun solveDay07Part2EvenMoreEfficient(input: List<String>): Int {
         .minOfOrNull { candidate ->
             horizontalPositions.sumOf { crab -> fuelCost(abs(crab - candidate)) }
         } ?: -1
+}
+
+// Fastest yet, instead of finding the best row by brute forcing them all, just take the average and take the floor of it.
+// Runs in 500 us
+fun solveDay07Part2ByAverage(input: List<String>): Int {
+    val horizontalPositions = input.first().split(",").map { it.toInt() }
+    val row = horizontalPositions.average().toInt() // floor the average
+    return horizontalPositions.sumOf { crab -> fuelCost(abs(crab - row)) }
 }
