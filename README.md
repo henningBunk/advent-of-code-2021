@@ -34,6 +34,11 @@ I wonder if I there is a sigma operand for the second calculation, I feel like t
 Also, the runtime is pretty slow since it's a brute force approach. ~~But right now I don't feel like optimizing.~~ Found the trick with the triangle numbers. Which reduced the runtime from 5s to 100ms, not using higher order function reduced it further to 30ms.
 
 ###  [Day 8](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day08/Day08.kt)
+I struggled with this one. I chose the wrong datatype to store my remaining candidates for each segment. I used an array of strings and for the operations I used char arrays. Here I got hugely confused with Kotlin's Array<Char> and CharArray. Afterwards I read the docs and am wiser now :)
+I refactored my solution now that it is easier to read and more concise but it is still my original logic. I would like to implement it again using sets because I think that's way more appropriate. Also would like to test out a solution of a colleague who didn't decode the pattern but immediately determined the value of the codes.
+
+Great and interesting day!
+
 ###  [Day 9](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day09/Day09.kt)
 ###  [Day 10](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day10/Day10.kt)
 ###  [Day 11](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day11/Day11.kt)
