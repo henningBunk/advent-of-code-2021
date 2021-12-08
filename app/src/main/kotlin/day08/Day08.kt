@@ -33,9 +33,7 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
     val data = (signal + result).map { it.toCharArray() }
     val possibleCandidates = List(7) { "abcdefg" }.toTypedArray()
     val seenOnThisSegment = List(7) { "" }.toTypedArray()
-//    while (segments.any { it.length > 1 }) {
 
-//    evaluate(possibleCandidates, seenOnThisSegment)
     data.forEach { number ->
         when (number.size) {
             // Distinct Numbers, must be 1, 4 or 7
@@ -56,21 +54,16 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
                 seenOnThisSegment.seenOnThisSpot(number, 1, 2, 3, 5)
             }
         }
-//        evaluate(possibleCandidates, seenOnThisSegment)
     }
-//    evaluate(possibleCandidates, seenOnThisSegment)
-
     val sharedByFiveSegmentNumbers = data.filter { it.size == 5 }.let { fiveSegmentNumbers ->
         // Five segment numbers, must be 2, 3, or 5
         val appearsInAll = fiveSegmentNumbers.fold("abcdefg") { rest, next ->
             rest.toSet().intersect(next.toSet()).joinToString("")
         }
-//        println("Five digit numbers which sharing this segments: $appearsInAll")
         // The shared ones must be the horizontal ones
         possibleCandidates.removeCandidate(appearsInAll.toCharArray(), 1, 2, 4, 5)
         appearsInAll
     }
-//    evaluate(possibleCandidates, seenOnThisSegment)
 
     val sharedBySixSegmentNumbers = data.filter { it.size == 6 }
         .onEach { it.sort() }
@@ -83,44 +76,31 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
                 sixSegmentNumbers[0].union(sixSegmentNumbers[2]).minus(sixSegmentNumbers[1]).joinToString(""),
                 sixSegmentNumbers[0].union(sixSegmentNumbers[1]).minus(sixSegmentNumbers[2]).joinToString(""),
             ).joinToString("")
-//            println("Six digit numbers which sharing this segments: $appearsInAll")
-            // The shared ones must be the horizontal ones
-//            possibleCandidates.removeCandidate(appearsInAll.toCharArray(), 1, 2, 4, 5)
             appearsInAll
         }
 
-//    println("sharedByFiveSegmentNumbers: $sharedByFiveSegmentNumbers, sharedBySixSegmentNumbers $sharedBySixSegmentNumbers")
     val middleHorizontal = sharedByFiveSegmentNumbers.toSet().intersect(sharedBySixSegmentNumbers.toSet()).first()
     possibleCandidates.removeCandidate(listOf(middleHorizontal).toCharArray().opposite, 3)
 
     val restOfSixDigitNumbers = sharedBySixSegmentNumbers.filter { it != middleHorizontal }
-//    println(restOfSixDigitNumbers)
-//    evaluate(possibleCandidates, seenOnThisSegment)
     if (possibleCandidates[2].contains(restOfSixDigitNumbers[1]) || possibleCandidates[5].contains(restOfSixDigitNumbers[1])) {
-        // 1 -> 5
-        // 9 -> 2
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 2) // remove b
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 5) // remove a
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 2)
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 5)
 
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 4) // remove b
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 1) // remove a
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 4)
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 1)
     } else {
-        // not sure
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 2) // remove b
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 5) // remove a
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 2)
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 5)
 
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 4) // remove b
-        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 1) // remove a
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 4)
+        possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 1)
     }
 
     // Bottom horizontal
-//    possibleCandidates[6]
     val possibleCandidatesBottomHorizontal = possibleCandidates[6].toSet()
     val possibleCandidatesRest = possibleCandidates.copyOfRange(0, 6).map { it[0] }.toSet()
     val letter = possibleCandidatesBottomHorizontal.subtract(possibleCandidatesRest)
-//    println(letter)
-
-//    evaluate(possibleCandidates, seenOnThisSegment)
 
     possibleCandidates.removeCandidate(arrayOf(letter.first()).toCharArray().opposite, 6)
 
