@@ -19,43 +19,30 @@ fun solveDay08Part1_2(input: List<String>): Int = -1
 fun solveDay08Part2_2(input: List<String>): Int = input.sumOf { line ->
     line.split(" | ").let { (left, right) ->
         val codes = left.split(" ").map { it.toSortedSet() }.toMutableSet()
-
         val decoded: MutableMap<Int, Set<Char>> = mutableMapOf()
-
-        val wiring = Wiring(left)
 
         decoded[1] = codes.singleAndRemove(segments = 2)
         decoded[4] = codes.singleAndRemove(segments = 4)
         decoded[7] = codes.singleAndRemove(segments = 3)
         decoded[8] = codes.singleAndRemove(segments = 7)
-        decoded[3] = codes.singleAndRemove(segments = 5, sharesAllSegmentsWith = 1)
-        decoded[9] = codes.singleAndRemove(segments = 6) { it.containsAll(decoded.getValue(3)) }
-        decoded[6] =
-            codes.singleAndRemove(segments = 6) { it.containsAll(decoded.getValue(4).minus(decoded.getValue(1))) }
+        decoded[3] = codes.singleAndRemove(segments = 5, containsAllSegments = decoded.getValue(1))
+        decoded[9] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(3))
+        decoded[6] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(4) - decoded.getValue(1))
         decoded[0] = codes.singleAndRemove(segments = 6)
-        decoded[5] = codes.singleAndRemove(segments = 5) { decoded.getValue(9).containsAll(it) }
+        decoded[5] = codes.singleAndRemove(segments = 5, containsAllSegments = decoded.getValue(4) - decoded.getValue(1))
         decoded[2] = codes.single()
 
         right
             .split(" ")
             .map { digit -> decoded.filterValues { it == digit.toSortedSet() }.keys.single() }
-            .joinToString("").also(::println)
+            .joinToString("")
             .toInt()
     }
 }
 
-private fun MutableSet<SortedSet<Char>>.singleAndRemove(
+fun MutableSet<SortedSet<Char>>.singleAndRemove(
     segments: Int,
-    sharesAllSegmentsWith: Int? = null,
-    predicate: (SortedSet<Char>) -> Boolean = { true }
+    containsAllSegments: Set<Char>? = null
 ): Set<Char> = single {
-    it.size == segments && it.containsAll(this) }
+    it.size == segments && it.containsAll(containsAllSegments ?: emptySet())
 }.also { this.remove(it) }
-
-private class Wiring(
-    inputLine: String
-) {
-    val codes = inputLine.split(" ").map { it.toSortedSet() }.toMutableSet()
-
-    val decoded: MutableMap<Int, Set<Char>> = mutableMapOf()
-}
