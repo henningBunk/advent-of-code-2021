@@ -77,11 +77,15 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 4)
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 1)
     } else {
+
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 2)
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 5)
 
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 4)
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 1)
+
+
+
     }
     evaluate(possibleCandidates)
 
@@ -90,8 +94,10 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
     val possibleCandidatesRest = possibleCandidates.copyOfRange(0, 6).map { it[0] }.toSet()
     val letter = possibleCandidatesBottomHorizontal.subtract(possibleCandidatesRest)
 
-    possibleCandidates.removeCandidate(arrayOf(letter.first()).toCharArray().opposite, 6)
+
+    possibleCandidates.narrowDownCandidates(arrayOf(letter.first()).toCharArray().opposite, 6)
     evaluate(possibleCandidates)
+
 
     val wiring: CharArray = possibleCandidates.map { it.first() }.toCharArray()
     return result.map { it.getDigit(wiring) }.joinToString("").toInt()
