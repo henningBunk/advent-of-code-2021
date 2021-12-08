@@ -36,10 +36,10 @@ data class Display(
 ) {
     fun read(): Int {
 
-        val data = (tenUniqueSignalPatterns + fourDigitOutputValue).map { it.toCharArray() }
-        val possibleCandidates = List(7) { "abcdefg" }.toTypedArray()
+        val data: List<Array<Char>> = (tenUniqueSignalPatterns + fourDigitOutputValue).map { it.toCharArray().toTypedArray() }
+        val possibleCandidates: Array<String> = List(7) { "abcdefg" }.toTypedArray()
 
-        data.forEach { number ->
+        data.forEach { number: Array<Char> ->
             when (number.size) {
                 // Distinct Numbers, must be 1, 4 or 7
                 2 -> possibleCandidates.narrowDownCandidates(number, 0, 1, 3, 4, 6)
@@ -47,13 +47,14 @@ data class Display(
                 4 -> possibleCandidates.narrowDownCandidates(number, 0, 4, 6)
             }
         }
+
         val sharedByFiveSegmentNumbers = data.filter { it.size == 5 }.let { fiveSegmentNumbers ->
             // Five segment numbers, must be 2, 3, or 5
-            val appearsInAll = fiveSegmentNumbers.fold("abcdefg") { rest, next ->
-                rest.toSet().intersect(next.toSet()).joinToString("")
-            }
+            val appearsInAll: Array<Char> = fiveSegmentNumbers.fold(setOf('a', 'b', 'c', 'd', 'e', 'f', 'g')) { rest, next ->
+                rest.intersect(next.toSet())
+            }.toTypedArray()
             // The shared ones must be the horizontal ones
-            possibleCandidates.narrowDownCandidates(appearsInAll.toCharArray(), 1, 2, 4, 5)
+            possibleCandidates.narrowDownCandidates(appearsInAll, 1, 2, 4, 5)
             appearsInAll
         }
 
@@ -71,8 +72,8 @@ data class Display(
                 appearsInAll
             }
 
-        val middleHorizontal = sharedByFiveSegmentNumbers.toSet().intersect(sharedBySixSegmentNumbers.toSet()).first()
-        possibleCandidates.narrowDownCandidates(listOf(middleHorizontal).toCharArray().opposite, 3)
+        val middleHorizontal: Char = sharedByFiveSegmentNumbers.toSet().intersect(sharedBySixSegmentNumbers.toSet()).first()
+        possibleCandidates.narrowDownCandidates(arrayOf(middleHorizontal).opposite, 3)
 
 
         val restOfSixDigitNumbers = sharedBySixSegmentNumbers.filter { it != middleHorizontal }
@@ -80,18 +81,18 @@ data class Display(
                 restOfSixDigitNumbers[1]
             )
         ) {
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 2)
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 5)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).opposite, 2)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]), 5)
 
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 4)
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 1)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).opposite, 4)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]), 1)
         } else {
 
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray().opposite, 2)
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).toCharArray(), 5)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]).opposite, 2)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[0]), 5)
 
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 4)
-            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 1)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).opposite, 4)
+            possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]), 1)
         }
 
         evaluate(possibleCandidates)
@@ -102,7 +103,7 @@ data class Display(
         val letter = possibleCandidatesBottomHorizontal.subtract(possibleCandidatesRest)
 
 
-        possibleCandidates.narrowDownCandidates(arrayOf(letter.first()).toCharArray().opposite, 6)
+        possibleCandidates.narrowDownCandidates(arrayOf(letter.first()).opposite, 6)
         evaluate(possibleCandidates)
 
 
@@ -130,11 +131,11 @@ data class Display(
         return -1
     }
 
-    private val kotlin.CharArray.opposite
-        get() = "abcdefg".filterNot(::contains).toCharArray()
+    private val Array<Char>.opposite: Array<Char>
+        get() = "abcdefg".filterNot(::contains).toCharArray().toTypedArray()
 
 
-    private fun Array<String>.narrowDownCandidates(number: CharArray, vararg segments: Int) {
+    private fun Array<String>.narrowDownCandidates(number: Array<Char>, vararg segments: Int) {
         removeCandidate(number, *segments.toTypedArray().toIntArray())
         removeCandidate(
             number.opposite,
@@ -144,7 +145,7 @@ data class Display(
     }
 
 
-    private fun Array<String>.removeCandidate(number: CharArray, vararg segments: Int) {
+    private fun Array<String>.removeCandidate(number: Array<Char>, vararg segments: Int) {
         segments.forEach { segment ->
             this[segment] = get(segment).filterNot(number::contains)
         }
