@@ -27,15 +27,14 @@ fun solveDay08Part1(input: List<String>): Int = input
 // The solution for day 8 part 2 is: 1091165
 fun solveDay08Part2(input: List<String>): Int = input
     .parseToDisplays()
-    .map { display -> display.read() }
-    .sum()
+    .sumOf { display -> display.read() }
 
 data class Display(
     val tenUniqueSignalPatterns: List<String>,
     val fourDigitOutputValue: List<String>
 ) {
 
-    private val wiring: Array<Char> = decode(tenUniqueSignalPatterns, fourDigitOutputValue)
+    private val wiring: Array<Char> = decode(tenUniqueSignalPatterns + fourDigitOutputValue)
 
     fun read(): Int = fourDigitOutputValue
         .map { it.getDigit(wiring) }
@@ -64,12 +63,10 @@ data class Display(
      *         6
      *
      */
-    private fun decode(
-        tenUniqueSignalPatterns: List<String>,
-        fourDigitOutputValue: List<String>
-    ): Array<Char> {
-        val data: List<Array<Char>> = (tenUniqueSignalPatterns + fourDigitOutputValue)
+    private fun decode(numbers: List<String>): Array<Char> {
+        val data: List<Array<Char>> = numbers
             .map { it.toCharArray().toTypedArray() }
+
         val possibleCandidates: Array<Array<Char>> = Array(7) { arrayOf('a', 'b', 'c', 'd', 'e', 'f', 'g') }
 
         // Distinct Numbers 1, 4 or 7
