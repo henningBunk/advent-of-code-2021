@@ -36,7 +36,7 @@ class Day08Test : FreeSpec({
     }
 
     "Deduct number for the example is correct" {
-        val (signal, result) = listOf(sampleLine).parse().first()
+        val (signal, result) = listOf(sampleLine).parseToDisplays().first()
         deductNumber(signal, result) shouldBe solutionForSampleLine
     }
 })

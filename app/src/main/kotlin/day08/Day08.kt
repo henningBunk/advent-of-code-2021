@@ -12,19 +12,19 @@ fun main(args: Array<String>) {
 }
 
 
-fun solveDay08Part1(input: List<String>): Int {
-    val results = input.parse().map { it.second }
-    val count = results.flatten().count {
-        when (it.length.also(::println)) {
+fun solveDay08Part1(input: List<String>): Int = input
+    .parseToDisplays()
+    .map { it.fourDigitOutputValue }
+    .flatten()
+    .count {
+        when (it.length) {
             2, 3, 4, 7 -> true
             else -> false
         }
     }
-    return count
-}
 
 fun solveDay08Part2(input: List<String>): Int {
-    return input.parse().map { (signal, result) ->
+    return input.parseToDisplays().map { (signal, result) ->
         deductNumber(signal, result)
     }.sum()
 }
@@ -83,10 +83,8 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
 
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 4)
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 1)
-
-
-
     }
+
     evaluate(possibleCandidates)
 
     // Bottom horizontal
@@ -149,14 +147,14 @@ fun evaluate(possibleCandidates: Array<String>) {
     println()
 }
 
-fun List<String>.parse(): List<Pair<List<String>, List<String>>> {
-    return map { line ->
-        line.split("|")
-            .let { (signal, result) ->
-                Pair(
-                    signal.trim().split(" "),
-                    result.trim().split(" ")
-                )
-            }
-    }
+fun List<String>.parseToDisplays(): List<Display> = map { line ->
+    line.split("|")
+        .let { (tenUniqueSignalPatterns, fourDigitOutputValue) ->
+            Display(
+                tenUniqueSignalPatterns.trim().split(" "),
+                fourDigitOutputValue.trim().split(" ")
+            )
+        }
 }
+
+data class Display(val tenUniqueSignalPatterns: List<String>, val fourDigitOutputValue: List<String>)
