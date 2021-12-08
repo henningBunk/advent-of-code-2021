@@ -32,27 +32,13 @@ fun solveDay08Part2(input: List<String>): Int {
 fun deductNumber(signal: List<String>, result: List<String>): Int {
     val data = (signal + result).map { it.toCharArray() }
     val possibleCandidates = List(7) { "abcdefg" }.toTypedArray()
-    val seenOnThisSegment = List(7) { "" }.toTypedArray()
 
     data.forEach { number ->
         when (number.size) {
             // Distinct Numbers, must be 1, 4 or 7
-            2 -> {
-                possibleCandidates.removeCandidate(number, 0, 1, 3, 4, 6)
-                possibleCandidates.removeCandidate(number.opposite, 2, 5)
-                seenOnThisSegment.seenOnThisSpot(number, 2, 5)
-            }
-            3 -> {
-                possibleCandidates.removeCandidate(number, 1, 3, 4, 6)
-                possibleCandidates.removeCandidate(number.opposite, 0, 2, 5)
-                seenOnThisSegment.seenOnThisSpot(number, 0, 2, 5)
-
-            }
-            4 -> {
-                possibleCandidates.removeCandidate(number, 0, 4, 6)
-                possibleCandidates.removeCandidate(number.opposite, 1, 2, 3, 5)
-                seenOnThisSegment.seenOnThisSpot(number, 1, 2, 3, 5)
-            }
+            2 -> possibleCandidates.narrowDownCandidates(number, 0, 1, 3, 4, 6)
+            3 -> possibleCandidates.narrowDownCandidates(number, 1, 3, 4, 6)
+            4 -> possibleCandidates.narrowDownCandidates(number, 0, 4, 6)
         }
     }
     val sharedByFiveSegmentNumbers = data.filter { it.size == 5 }.let { fiveSegmentNumbers ->
@@ -61,7 +47,7 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
             rest.toSet().intersect(next.toSet()).joinToString("")
         }
         // The shared ones must be the horizontal ones
-        possibleCandidates.removeCandidate(appearsInAll.toCharArray(), 1, 2, 4, 5)
+        possibleCandidates.narrowDownCandidates(appearsInAll.toCharArray(), 1, 2, 4, 5)
         appearsInAll
     }
 
@@ -80,7 +66,8 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
         }
 
     val middleHorizontal = sharedByFiveSegmentNumbers.toSet().intersect(sharedBySixSegmentNumbers.toSet()).first()
-    possibleCandidates.removeCandidate(listOf(middleHorizontal).toCharArray().opposite, 3)
+    possibleCandidates.narrowDownCandidates(listOf(middleHorizontal).toCharArray().opposite, 3)
+
 
     val restOfSixDigitNumbers = sharedBySixSegmentNumbers.filter { it != middleHorizontal }
     if (possibleCandidates[2].contains(restOfSixDigitNumbers[1]) || possibleCandidates[5].contains(restOfSixDigitNumbers[1])) {
@@ -96,6 +83,7 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray().opposite, 4)
         possibleCandidates.removeCandidate(arrayOf(restOfSixDigitNumbers[1]).toCharArray(), 1)
     }
+    evaluate(possibleCandidates)
 
     // Bottom horizontal
     val possibleCandidatesBottomHorizontal = possibleCandidates[6].toSet()
@@ -103,6 +91,7 @@ fun deductNumber(signal: List<String>, result: List<String>): Int {
     val letter = possibleCandidatesBottomHorizontal.subtract(possibleCandidatesRest)
 
     possibleCandidates.removeCandidate(arrayOf(letter.first()).toCharArray().opposite, 6)
+    evaluate(possibleCandidates)
 
     val wiring: CharArray = possibleCandidates.map { it.first() }.toCharArray()
     return result.map { it.getDigit(wiring) }.joinToString("").toInt()
@@ -113,7 +102,6 @@ private fun String.getDigit(wiring: CharArray): Int {
     if (length == 2) return 1.also(::println)
     if (length == 3) return 7.also(::println)
     if (length == 4) return 4.also(::println)
-    if (length == 2) return 1.also(::println)
     if (length == 7) return 8.also(::println)
     if (length == 5) {
         //2, 3, 5
@@ -132,24 +120,26 @@ private fun String.getDigit(wiring: CharArray): Int {
 private val CharArray.opposite
     get() = "abcdefg".filterNot(::contains).toCharArray()
 
+
+private fun Array<String>.narrowDownCandidates(number: CharArray, vararg segments: Int) {
+    removeCandidate(number, *segments.toTypedArray().toIntArray())
+    removeCandidate(
+        number.opposite,
+        *listOf(0, 1, 2, 3, 4, 5, 6).filterNot { segments.contains(it) }.toTypedArray().toIntArray()
+    )
+    evaluate(this)
+}
+
+
 private fun Array<String>.removeCandidate(number: CharArray, vararg segments: Int) {
     segments.forEach { segment ->
         this[segment] = get(segment).filterNot(number::contains)
     }
 }
 
-private fun Array<String>.seenOnThisSpot(number: CharArray, vararg segments: Int) {
-    segments.forEach { segment ->
-        this[segment] = this[segment].toSet().toMutableSet()
-            .apply { addAll(number.toList()) }
-            .joinToString("")
-    }
-}
-
-fun evaluate(possibleCandidates: Array<String>, seenOnThisSegment: Array<String>) {
+fun evaluate(possibleCandidates: Array<String>) {
     println("Goal      : [d, e, a, f, g, b, c]")
     println("Candidates: ${possibleCandidates.toList()}")
-    println("Seen here : ${seenOnThisSegment.toList()}")
     println()
 }
 
