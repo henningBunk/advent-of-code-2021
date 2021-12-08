@@ -36,8 +36,9 @@ data class Display(
 ) {
     fun read(): Int {
 
-        val data: List<Array<Char>> = (tenUniqueSignalPatterns + fourDigitOutputValue).map { it.toCharArray().toTypedArray() }
-        val possibleCandidates: Array<String> = List(7) { "abcdefg" }.toTypedArray()
+        val data: List<Array<Char>> = (tenUniqueSignalPatterns + fourDigitOutputValue)
+            .map { it.toCharArray().toTypedArray() }
+        val possibleCandidates: Array<Array<Char>> = Array(7) { arrayOf('a', 'b', 'c', 'd', 'e', 'f', 'g') }
 
         data.forEach { number: Array<Char> ->
             when (number.size) {
@@ -135,7 +136,7 @@ data class Display(
         get() = "abcdefg".filterNot(::contains).toCharArray().toTypedArray()
 
 
-    private fun Array<String>.narrowDownCandidates(number: Array<Char>, vararg segments: Int) {
+    private fun Array<Array<Char>>.narrowDownCandidates(number: Array<Char>, vararg segments: Int) {
         removeCandidate(number, *segments.toTypedArray().toIntArray())
         removeCandidate(
             number.opposite,
@@ -145,13 +146,13 @@ data class Display(
     }
 
 
-    private fun Array<String>.removeCandidate(number: Array<Char>, vararg segments: Int) {
+    private fun Array<Array<Char>>.removeCandidate(number: Array<Char>, vararg segments: Int) {
         segments.forEach { segment ->
-            this[segment] = get(segment).filterNot(number::contains)
+            this[segment] = get(segment).filterNot(number::contains).toTypedArray()
         }
     }
 
-    fun evaluate(possibleCandidates: Array<String>) {
+    fun evaluate(possibleCandidates: Array<Array<Char>>) {
         println("Goal      : [d, e, a, f, g, b, c]")
         println("Candidates: ${possibleCandidates.toList()}")
         println()
