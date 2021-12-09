@@ -15,8 +15,7 @@ fun main(args: Array<String>) {
 // The solution for day 8 part 1 is: 512
 fun solveDay08Part1(input: List<String>): Int = input
     .parseToDisplays()
-    .map { it.fourDigitOutputValue }
-    .flatten()
+    .flatMap { it.fourDigitOutputValue }
     .count {
         when (it.length) {
             2, 3, 4, 7 -> true

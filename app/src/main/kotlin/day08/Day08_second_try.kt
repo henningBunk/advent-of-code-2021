@@ -21,18 +21,18 @@ fun solveDay08Part2_2(input: List<String>): Int = input.sumOf { line ->
         val codes = left.split(" ").map { it.toSortedSet() }.toMutableSet()
         val decoded: MutableMap<Int, Set<Char>> = mutableMapOf()
 
-        decoded[1] = codes.singleAndRemove(segments = 2)
-        decoded[4] = codes.singleAndRemove(segments = 4)
-        decoded[7] = codes.singleAndRemove(segments = 3)
-        decoded[8] = codes.singleAndRemove(segments = 7)
-
-        decoded[9] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(4))
-        decoded[0] = codes.singleAndRemove(segments = 6, containsAllSegments = decoded.getValue(7))
-        decoded[6] = codes.singleAndRemove(segments = 6)
-
-        decoded[3] = codes.singleAndRemove(segments = 5, containsAllSegments = decoded.getValue(1))
-        decoded[5] = codes.singleAndRemove(segments = 5, containsAllSegments = decoded.getValue(4) - decoded.getValue(1))
-        decoded[2] = codes.single()
+        with(decoded) {
+            put(1, codes.singleAndRemove(segments = 2))
+            put(4, codes.singleAndRemove(segments = 4))
+            put(7, codes.singleAndRemove(segments = 3))
+            put(8, codes.singleAndRemove(segments = 7))
+            put(9, codes.singleAndRemove(segments = 6, containsAllSegments = getValue(4)))
+            put(0, codes.singleAndRemove(segments = 6, containsAllSegments = getValue(7)))
+            put(6, codes.singleAndRemove(segments = 6))
+            put(3, codes.singleAndRemove(segments = 5, containsAllSegments = getValue(1)))
+            put(5, codes.singleAndRemove(segments = 5, containsAllSegments = getValue(4) - getValue(1)))
+            put(2, codes.single())
+        }
 
         right
             .split(" ")
