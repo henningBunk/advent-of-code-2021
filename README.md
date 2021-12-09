@@ -44,6 +44,8 @@ Tried it again using a map and the approach of my colleague not to decode each w
 See: https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day08/Day08_second_try.kt
 
 ###  [Day 9](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day09/Day09.kt)
+Simple solution with a queue.
+
 ###  [Day 10](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day10/Day10.kt)
 ###  [Day 11](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day11/Day11.kt)
 ###  [Day 12](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day12/Day12.kt)
