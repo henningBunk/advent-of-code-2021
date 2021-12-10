@@ -47,6 +47,8 @@ See: https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/k
 Simple solution with a queue.
 
 ###  [Day 10](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day10/Day10.kt)
+Solved this one with my colleague using Ping-Pong-TDD-Pair-Programming. Great practice and lots of fun :)
+
 ###  [Day 11](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day11/Day11.kt)
 ###  [Day 12](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day12/Day12.kt)
 ###  [Day 13](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/main/kotlin/day13/Day13.kt)
