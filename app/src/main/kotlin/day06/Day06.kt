@@ -12,20 +12,16 @@ fun main(args: Array<String>) {
 }
 
 // Final population of lantern fish: 355386
-fun solveDay06Part1(input: List<String>): Int {
-    val population = Population(input.first())
-    population.ageBy(days = 80)
-    println("Final population of lantern fish: ${population.size}")
-    return -1
-}
+fun solveDay06Part1(input: List<String>): Long =
+    Population(input.first())
+        .apply { ageBy(days = 80) }
+        .size
 
 // Final population of lantern fish: 1613415325809
-fun solveDay06Part2(input: List<String>): Int {
-    val population = Population(input.first())
-    population.ageBy(days = 256)
-    println("Final population of lantern fish: ${population.size}")
-    return -1
-}
+fun solveDay06Part2(input: List<String>): Long =
+    Population(input.first())
+        .apply { ageBy(days = 256) }
+        .size
 
 class Population(initial: String) {
     var population: MutableMap<Int, Long> = mutableMapOf()
