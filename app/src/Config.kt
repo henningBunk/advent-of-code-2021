@@ -1,0 +1,3 @@
+object Config {
+    const val SESSION_COOKIE = "53616c7465645f5f37eeb8d2236de51725f8f7239a058597cfb7c3288096a8b3c945b6126f4097ddc3a5fd86ddf5d56b"
+}

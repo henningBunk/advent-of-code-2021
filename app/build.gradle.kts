@@ -3,6 +3,11 @@ plugins {
     application
 }
 
+println(rootProject.buildDir)
+//project.buildDir = File("app")
+
+
+
 repositories {
     mavenCentral()
 }
@@ -13,13 +18,18 @@ dependencies {
 
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
 
-    testImplementation("io.kotest:kotest-runner-junit5:4.6.4")
-    testImplementation("io.kotest:kotest-assertions-core:4.6.4")
-    testImplementation("io.mockk:mockk:1.12.1")
+    implementation("io.kotest:kotest-runner-junit5:4.6.4")
+    implementation("io.kotest:kotest-assertions-core:4.6.4")
+    implementation("io.mockk:mockk:1.12.1")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+
+}
+
+tasks.getByName<Delete>("clean") {
+    delete(rootProject.buildDir)
 }
 
 val sessionCookie: String? by project
@@ -31,3 +41,10 @@ application {
     )
 }
 
+tasks {
+    sourceSets {
+        main {
+            java.srcDirs("src")
+        }
+    }
+}
