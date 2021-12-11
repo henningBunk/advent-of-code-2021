@@ -52,6 +52,8 @@ Simple solution with a queue.
 Solved this one with my colleague using Ping-Pong-TDD-Pair-Programming. Great practice and lots of fun :)
 
 ###  [Day 11](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day11/Day11.kt)
+Nothing special today. I like the solution of putting the octopus in a map with the coordinates as a key. Makes finding the neighbours pretty easy and you don't have to check for limits of the map. Since each octopus knows it's neighbours, I don't need to remember their position of the map which is nice too.
+
 ###  [Day 12](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day12/Day12.kt)
 ###  [Day 13](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day13/Day13.kt)
 ###  [Day 14](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day14/Day14.kt)
