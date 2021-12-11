@@ -34,7 +34,7 @@ interface AocSolution {
             sampleAnswer = answers.samplePart1,
             answer = answers.part1,
             input = input,
-            part = 1,
+            part = Part.Part1,
             solvingFun = ::solvePart1,
         )
 
@@ -45,7 +45,7 @@ interface AocSolution {
             sampleAnswer = answers.samplePart2,
             answer = answers.part2,
             input = input,
-            part = 2,
+            part = Part.Part2,
             solvingFun = ::solvePart2,
         )
     }
@@ -62,7 +62,7 @@ interface AocSolution {
         sampleAnswer: Any,
         answer: Any?,
         input: List<String>,
-        part: Int,
+        part: Part,
         solvingFun: (List<String>) -> Any,
     ) {
         try {
@@ -97,9 +97,15 @@ interface AocSolution {
                 }."
             )
             println("Your solution for $year day $day part $part is: ${solution.value}")
-            if(answer == null) {
+            if (answer == null) {
                 println("⭐ Go get your star!")
-            } else if(solution.value.toString() == answer.toString()) {
+                println("✉️ Do you want to submit your answer to adventofcode.com? [Y/n]:")
+
+                if (readLine() != "n") {
+                    AnswerSubmitter().submitAnswer(year, day, part, solution.value.toString())
+                }
+
+            } else if (solution.value.toString() == answer.toString()) {
                 println("✅ That is correct!")
             } else {
                 println("❌ But sadly this is wrong. The real answer would be $answer")
