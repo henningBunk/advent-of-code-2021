@@ -69,5 +69,11 @@ Nothing special today. I like the solution of putting the octopus in a map with 
 ###  [Day 24](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day24/Day24.kt)
 ###  [Day 25](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day25/Day25.kt)
 
-
-
+## Thanks
+This repo was build using inspiration from these repositories which I am thankful for:
+* https://gitlab.com/martyschaer/advent-of-code-complete
+  * Interface for the Solutions with solving funs
+  * Annotations to mark the year and days
+* https://github.com/kotlin-hands-on/advent-of-code-kotlin-template
+  * A simpler folder structure
+  * A single run command to run tests against the sample data and on success resume with the real data
