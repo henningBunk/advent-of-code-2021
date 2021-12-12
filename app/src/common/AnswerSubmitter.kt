@@ -9,11 +9,11 @@ class AnswerSubmitter {
     private val sessionCookie: String = Config.SESSION_COOKIE
 
     fun submitAnswer(year: Int, day: Int, part: Part, solution: String) {
-        println("Posting '$solution' as an answer to year $year day $day part ${part.postValue}.")
+        println("Posting '$solution' as an answer to year $year day $day part ${part.value}.")
         val (_, _, result) = getUrl(year, day)
             .httpPost(
                 listOf(
-                    "level" to part.postValue,
+                    "level" to part.value,
                     "answer" to solution,
                 )
             )
@@ -29,7 +29,7 @@ class AnswerSubmitter {
                 result.value.contains(Response.TooHigh.regex) ->
                     println("❌ Your answer was too high.")
                 result.value.contains(Response.InvalidLevel.regex) ->
-                    println("❌ You don't seem to be solving the right level. Are you sure you want to upload a solution for year $year day $day part ${part.postValue}?")
+                    println("❌ You don't seem to be solving the right level. Are you sure you want to upload a solution for year $year day $day part ${part.value}?")
             }
             is Result.Failure -> throw(result.error)
         }
@@ -45,7 +45,7 @@ enum class Response(val regex: Regex) {
     InvalidLevel("""You don't seem to be solving the right level""".toRegex())
 }
 
-enum class Part(val postValue: String) {
+enum class Part(val value: String) {
     Part1("1"),
     Part2("2")
 }

@@ -1,7 +1,6 @@
 package common
 
 import common.annotations.AoCPuzzle
-import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 
@@ -16,8 +15,11 @@ interface AocSolution {
 
     val answers: Answers
 
-    fun solveThem() {
-
+    fun solveThem(
+        solutionDescription: String? = null,
+        ignorePart1: Boolean = false,
+        ignorePart2: Boolean = false,
+    ) {
         val aocAnnotation =
             this.javaClass.annotations.find { it is AoCPuzzle } as? AoCPuzzle ?: error("No @AoCPuzzle annotation given")
         val year = aocAnnotation.year
@@ -27,27 +29,36 @@ interface AocSolution {
         val sampleInput = repo.getSample(year, day)
         val input = repo.get(year, day)
 
-        staggeredSolving(
-            year = year,
-            day = day,
-            sampleInput = sampleInput,
-            sampleAnswer = answers.samplePart1,
-            answer = answers.part1,
-            input = input,
-            part = Part.Part1,
-            solvingFun = ::solvePart1,
-        )
+        solutionDescription?.let(Output.Solving::printDescription)
+        if (!ignorePart1) {
+            staggeredSolving(
+                year = year,
+                day = day,
+                sampleInput = sampleInput,
+                sampleAnswer = answers.samplePart1,
+                answer = answers.part1,
+                input = input,
+                part = Part.Part1,
+                solvingFun = ::solvePart1,
+            )
+        } else {
+            Output.Solving.printIgnorePart(Part.Part1)
+        }
 
-        staggeredSolving(
-            year = year,
-            day = day,
-            sampleInput = sampleInput,
-            sampleAnswer = answers.samplePart2,
-            answer = answers.part2,
-            input = input,
-            part = Part.Part2,
-            solvingFun = ::solvePart2,
-        )
+        if (!ignorePart2) {
+            staggeredSolving(
+                year = year,
+                day = day,
+                sampleInput = sampleInput,
+                sampleAnswer = answers.samplePart2,
+                answer = answers.part2,
+                input = input,
+                part = Part.Part2,
+                solvingFun = ::solvePart2,
+            )
+        } else {
+            Output.Solving.printIgnorePart(Part.Part2)
+        }
     }
 
     fun solvePart1(input: List<String>): Any
@@ -65,58 +76,44 @@ interface AocSolution {
         part: Part,
         solvingFun: (List<String>) -> Any,
     ) {
-        println("""
-            
-           ###########################
-           #####      PART ${part.postValue}     #####
-           ###########################""".trimIndent()
-        )
+        Output.Solving.printHeader(year, day, part)
         try {
             val sampleResult = solvingFun(sampleInput)
-            if (sampleResult.toString() == sampleAnswer.toString()) {
-                println("\n✅ Solution for part ${part.postValue} successfully verified against the sample data.")
-            } else {
-                println(
-                    """|
-                       |❌ Oh no! Your solution for part ${part.postValue} did not return the expected answer for the sample input.
-                       |
-                       |Your sample input:
-                       |$sampleInput
-                       |
-                       |Expected result: $sampleAnswer
-                       |Actual result:   $sampleResult   
-                """.trimMargin()
+            when {
+                checkResult(sampleResult, sampleAnswer) -> Output.Solving.printCorrectAgainstSampleData()
+                else -> Output.Solving.printIncorrectAgainstSampleData(
+                    part,
+                    sampleInput,
+                    sampleAnswer,
+                    sampleResult
                 )
-                return
+                    .also { return }
             }
 
-            println("\nStart solving $year day $day part ${part.postValue}.")
+            Output.Solving.printStartSolving()
             val solution = measureTimedValue { solvingFun(input) }
-            println(
-                "\n⏱ Solving $year day $day part ${part.postValue} took ${
-                    solution.duration.toString(
-                        DurationUnit.MILLISECONDS,
-                        2
-                    )
-                }."
-            )
-            println("Your solution for $year day $day part ${part.postValue} is: ${solution.value}")
-            if (answer == null) {
-                println("⭐ Go get your star!")
-                println("✉️ Do you want to submit your answer to adventofcode.com? [Y/n]:")
+            Output.Solving.printResults(solution)
 
-                if (readLine() != "n") {
-                    AnswerSubmitter().submitAnswer(year, day, part, solution.value.toString())
+            when (answer) {
+                null -> {
+                    Output.Solving.printSubmitAnswer()
+                    if (readLine() != "n") {
+                        AnswerSubmitter().submitAnswer(year, day, part, solution.value.toString())
+                    }
                 }
-
-            } else if (solution.value.toString() == answer.toString()) {
-                println("✅ That is correct!")
-            } else {
-                println("❌ But sadly this is wrong. The real answer would be $answer")
+                else -> {
+                    Output.Solving.printVerification(
+                        isCorrect = checkResult(solution.value, answer),
+                        answer
+                    )
+                }
             }
-
         } catch (error: NotImplementedError) {
-            println("\nSkipped $year day $day part ${part.postValue}. ${error.message} 🚧")
+            Output.Solving.printSkipped(error)
         }
+    }
+
+    private fun checkResult(solution: Any, expected: Any): Boolean {
+        return solution.toString() == expected.toString()
     }
 }

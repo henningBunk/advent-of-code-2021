@@ -16,15 +16,15 @@ class InputRepo {
         val file = File("input/$year-$day.txt")
         return when {
             file.exists() -> {
-                println("Loading input for $year day $day from cache.")
+                Output.InputRepo.printFromCache(year, day)
                 file.read()
             }
             else -> {
-                println("Downloading input for $year day $day.")
+                Output.InputRepo.printDownload(year, day)
                 download(year, day)
                     .also {
                         file.write(it)
-                        println("Input saved to cache.")
+                        Output.InputRepo.printSavedToCache()
                     }
                     .lines()
             }
