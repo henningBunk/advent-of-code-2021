@@ -65,19 +65,23 @@ interface AocSolution {
         part: Part,
         solvingFun: (List<String>) -> Any,
     ) {
+        println("""
+            
+           ###########################
+           #####      PART ${part.postValue}     #####
+           ###########################""".trimIndent()
+        )
         try {
             val sampleResult = solvingFun(sampleInput)
             if (sampleResult.toString() == sampleAnswer.toString()) {
-                println("\n✅ Solution for part $part successfully verified against the sample data.")
+                println("\n✅ Solution for part ${part.postValue} successfully verified against the sample data.")
             } else {
                 println(
                     """|
-                       |❌ Oh no! Your solution for part 1 did not return the expected answer for the sample input.
+                       |❌ Oh no! Your solution for part ${part.postValue} did not return the expected answer for the sample input.
                        |
                        |Your sample input:
-                       |###########################
                        |$sampleInput
-                       |###########################
                        |
                        |Expected result: $sampleAnswer
                        |Actual result:   $sampleResult   
@@ -86,17 +90,17 @@ interface AocSolution {
                 return
             }
 
-            println("\nStart solving $year day $day part $part.")
+            println("\nStart solving $year day $day part ${part.postValue}.")
             val solution = measureTimedValue { solvingFun(input) }
             println(
-                "\n⏱ Solving $year day $day part $part took ${
+                "\n⏱ Solving $year day $day part ${part.postValue} took ${
                     solution.duration.toString(
                         DurationUnit.MILLISECONDS,
                         2
                     )
                 }."
             )
-            println("Your solution for $year day $day part $part is: ${solution.value}")
+            println("Your solution for $year day $day part ${part.postValue} is: ${solution.value}")
             if (answer == null) {
                 println("⭐ Go get your star!")
                 println("✉️ Do you want to submit your answer to adventofcode.com? [Y/n]:")
@@ -112,7 +116,7 @@ interface AocSolution {
             }
 
         } catch (error: NotImplementedError) {
-            println("\nSkipped $year day $day part $part. ${error.message} 🚧")
+            println("\nSkipped $year day $day part ${part.postValue}. ${error.message} 🚧")
         }
     }
 }
