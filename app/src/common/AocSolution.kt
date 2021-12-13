@@ -19,6 +19,7 @@ interface AocSolution {
         solutionDescription: String? = null,
         ignorePart1: Boolean = false,
         ignorePart2: Boolean = false,
+        ignoreSamples: Boolean = false,
     ) {
         val aocAnnotation =
             this.javaClass.annotations.find { it is AoCPuzzle } as? AoCPuzzle ?: error("No @AoCPuzzle annotation given")
@@ -40,6 +41,7 @@ interface AocSolution {
                 input = input,
                 part = Part.Part1,
                 solvingFun = ::solvePart1,
+                ignoreSamples = ignoreSamples,
             )
         } else {
             Output.Solving.printIgnorePart(Part.Part1)
@@ -55,6 +57,7 @@ interface AocSolution {
                 input = input,
                 part = Part.Part2,
                 solvingFun = ::solvePart2,
+                ignoreSamples = ignoreSamples,
             )
         } else {
             Output.Solving.printIgnorePart(Part.Part2)
@@ -75,19 +78,22 @@ interface AocSolution {
         input: List<String>,
         part: Part,
         solvingFun: (List<String>) -> Any,
+        ignoreSamples: Boolean,
     ) {
         Output.Solving.printHeader(year, day, part)
         try {
-            val sampleResult = solvingFun(sampleInput)
-            when {
-                checkResult(sampleResult, sampleAnswer) -> Output.Solving.printCorrectAgainstSampleData()
-                else -> Output.Solving.printIncorrectAgainstSampleData(
-                    part,
-                    sampleInput,
-                    sampleAnswer,
-                    sampleResult
-                )
-                    .also { return }
+            if (!ignoreSamples) {
+                val sampleResult = solvingFun(sampleInput)
+                when {
+                    checkResult(sampleResult, sampleAnswer) -> Output.Solving.printCorrectAgainstSampleData()
+                    else -> Output.Solving.printIncorrectAgainstSampleData(
+                        part,
+                        sampleInput,
+                        sampleAnswer,
+                        sampleResult
+                    )
+                        .also { return }
+                }
             }
 
             Output.Solving.printStartSolving()

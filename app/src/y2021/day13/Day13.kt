@@ -8,7 +8,9 @@ import transpose
 typealias Paper = List<List<Boolean>>
 
 fun main(args: Array<String>) {
-    Day13().solveThem()
+    Day13().solveThem(
+        ignoreSamples = true
+    )
 }
 
 @AoCPuzzle(2021, 13)
@@ -20,7 +22,6 @@ class Day13 : AocSolution {
         .let { (paper, instructions) ->
             instructions
                 .first()(paper)
-//                .also { println("height: ${it.size}, width ${it.first().size}")  }
                 .flatten()
                 .count { it }
         }
