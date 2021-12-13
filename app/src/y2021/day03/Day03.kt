@@ -3,6 +3,7 @@ package y2021.day03
 import common.Answers
 import common.AocSolution
 import common.annotations.AoCPuzzle
+import transpose
 
 fun main(args: Array<String>) {
     Day03().solveThem()
@@ -77,14 +78,6 @@ class Day03 : AocSolution {
             1 -> filteredInput.first()
             else -> findRecursive(filteredInput, index + 1, criteria)
         }
-    }
-
-    private fun <T> List<List<T>>.transpose(): List<List<T>> {
-        val target: MutableList<List<T>> = emptyList<List<T>>().toMutableList()
-        (0..first().lastIndex).forEach { index ->
-            target.add(map { it[index] })
-        }
-        return target
     }
 
     private fun List<Int>.toDecimal() = joinToString(separator = "").toInt(2)

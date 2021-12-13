@@ -12,10 +12,10 @@ class DayXY : AocSolution {
     override val answers = Answers(samplePart1 = -1, samplePart2 = -1)
 
     override fun solvePart1(input: List<String>): Any {
-        TODO("Not yet implemented.")
+        TODO()
     }
 
     override fun solvePart2(input: List<String>): Any {
-        TODO("Not yet implemented.")
+        TODO()
     }
 }
