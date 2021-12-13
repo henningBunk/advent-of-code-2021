@@ -4,6 +4,7 @@ import common.Answers
 import common.AocSolution
 import common.annotations.AoCPuzzle
 import transpose
+import kotlin.math.abs
 
 typealias Paper = List<List<Boolean>>
 
@@ -16,7 +17,25 @@ fun main(args: Array<String>) {
 
 @AoCPuzzle(2021, 13)
 class Day13 : AocSolution {
-    override val answers = Answers(samplePart1 = 17, samplePart2 = -1)
+    override val answers = Answers(
+        samplePart1 = 17,
+        part1 = 731,
+        samplePart2 = """
+                      |█████
+                      |█   █
+                      |█   █
+                      |█   █
+                      |█████
+                      |     
+                      |     """.trimMargin(),
+        part2 = """
+                      |████ █  █  ██  █  █  ██  ████ █  █  ██  
+                      |   █ █ █  █  █ █  █ █  █ █    █  █ █  █ 
+                      |  █  ██   █  █ █  █ █    ███  █  █ █    
+                      | █   █ █  ████ █  █ █    █    █  █ █    
+                      |█    █ █  █  █ █  █ █  █ █    █  █ █  █ 
+                      |████ █  █ █  █  ██   ██  █     ██   ██  """.trimMargin()
+    )
 
     override fun solvePart1(input: List<String>): Any = input
         .parse()
@@ -28,9 +47,13 @@ class Day13 : AocSolution {
         }
 
 
-    override fun solvePart2(input: List<String>): Any {
-        TODO("Not yet implemented.")
-    }
+    override fun solvePart2(input: List<String>): Any = input
+        .parse()
+        .let { (paper, instructions) ->
+            instructions
+                .fold(paper) { paper, foldingInstruction -> foldingInstruction(paper) }
+                .paperToString()
+        }
 
     private fun List<String>.parse(): Pair<Paper, List<FoldingOperation>> = this
         .filter { it.isNotEmpty() }
@@ -70,24 +93,26 @@ class FoldUp(private val y: Int) : FoldingOperation {
         .transpose()
         .let { FoldLeft(y)(it) }
         .transpose()
-        .also { println("Folding up by $y") }
 }
 
 class FoldLeft(private val x: Int) : FoldingOperation {
     override operator fun invoke(paper: Paper): Paper = paper
         .map {
-            it
-                .zip(it.reversed())
-                .subList(0, x)
+            val left = it.subList(0, x).reversed().toMutableList()
+            val right = it.subList(x + 1, it.lastIndex + 1).toMutableList()
+            when {
+                left.size < right.size -> left
+                else -> right
+            }.let { it.addAll(List(abs(left.size - right.size)) { false }) }
+
+            left.zip(right)
                 .map { (a, b) -> a || b }
+                .reversed()
         }
-        .also { println("Folding left by $x") }
 }
 
-fun List<List<Boolean>>.println() {
-    this.forEach { line ->
-        line.forEach { cell -> print(if(cell) '#' else '.') }
-        kotlin.io.println()
+fun Paper.paperToString(): String {
+    return joinToString("\n") {
+        it.joinToString("") { if (it) "█" else " " }
     }
-    kotlin.io.println()
 }

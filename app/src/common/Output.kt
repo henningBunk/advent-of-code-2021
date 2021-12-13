@@ -66,10 +66,15 @@ object Output {
         @OptIn(ExperimentalTime::class)
         fun printResults(solution: TimedValue<Any>) = println(
             """
-                    👉 Your solution is: ${solution.value}
+                    👉 Your solution is: ${formatSolution(solution.value)}
                     ⏱ Calculating it took ${solution.duration.toString(DurationUnit.MILLISECONDS, 2)}
                 """.trimIndent()
         )
+
+        private fun formatSolution(value: Any): String = when {
+            value is String && value.contains("\n") -> "\n\n$value\n\n"
+            else -> value.toString()
+        }
 
         fun printSubmitAnswer() = println(
             """
