@@ -9,7 +9,8 @@ typealias Paper = List<List<Boolean>>
 
 fun main(args: Array<String>) {
     Day13().solveThem(
-        ignoreSamples = true
+        ignoreSamples = false,
+        ignoreRealInput = false,
     )
 }
 
@@ -75,8 +76,9 @@ class FoldUp(private val y: Int) : FoldingOperation {
 class FoldLeft(private val x: Int) : FoldingOperation {
     override fun invoke(paper: Paper): Paper = paper
         .map {
-            it.subList(0, x)
-                .zip(it.subList(x, it.size).reversed())
+            it
+                .zip(it.reversed())
+                .subList(0, x)
                 .map { (a, b) -> a || b }
         }
         .also { println("Folding left by $x") }

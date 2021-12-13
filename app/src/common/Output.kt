@@ -72,8 +72,9 @@ object Output {
         )
 
         fun printSubmitAnswer() = println(
-            """⭐ Go get your star!)
-            ✉️ Do you want to submit your answer to adventofcode.com? [Y/n]:""".trimIndent()
+            """
+                ⭐ Go get your star!
+                ✉️ Do you want to submit your answer to adventofcode.com? [Y/n]:""".trimIndent()
         )
 
         fun printVerification(isCorrect: Boolean, answer: Any?) = println(

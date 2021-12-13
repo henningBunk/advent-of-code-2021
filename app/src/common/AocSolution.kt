@@ -20,6 +20,7 @@ interface AocSolution {
         ignorePart1: Boolean = false,
         ignorePart2: Boolean = false,
         ignoreSamples: Boolean = false,
+        ignoreRealInput: Boolean = false,
     ) {
         val aocAnnotation =
             this.javaClass.annotations.find { it is AoCPuzzle } as? AoCPuzzle ?: error("No @AoCPuzzle annotation given")
@@ -42,6 +43,7 @@ interface AocSolution {
                 part = Part.Part1,
                 solvingFun = ::solvePart1,
                 ignoreSamples = ignoreSamples,
+                ignoreRealInput = ignoreRealInput,
             )
         } else {
             Output.Solving.printIgnorePart(Part.Part1)
@@ -58,6 +60,7 @@ interface AocSolution {
                 part = Part.Part2,
                 solvingFun = ::solvePart2,
                 ignoreSamples = ignoreSamples,
+                ignoreRealInput = ignoreRealInput,
             )
         } else {
             Output.Solving.printIgnorePart(Part.Part2)
@@ -79,6 +82,7 @@ interface AocSolution {
         part: Part,
         solvingFun: (List<String>) -> Any,
         ignoreSamples: Boolean,
+        ignoreRealInput: Boolean,
     ) {
         Output.Solving.printHeader(year, day, part)
         try {
@@ -96,22 +100,24 @@ interface AocSolution {
                 }
             }
 
-            Output.Solving.printStartSolving()
-            val solution = measureTimedValue { solvingFun(input) }
-            Output.Solving.printResults(solution)
+            if (!ignoreRealInput) {
+                Output.Solving.printStartSolving()
+                val solution = measureTimedValue { solvingFun(input) }
+                Output.Solving.printResults(solution)
 
-            when (answer) {
-                null -> {
-                    Output.Solving.printSubmitAnswer()
-                    if (readLine() != "n") {
-                        AnswerSubmitter().submitAnswer(year, day, part, solution.value.toString())
+                when (answer) {
+                    null -> {
+                        Output.Solving.printSubmitAnswer()
+                        if (readLine() != "n") {
+                            AnswerSubmitter().submitAnswer(year, day, part, solution.value.toString())
+                        }
                     }
-                }
-                else -> {
-                    Output.Solving.printVerification(
-                        isCorrect = checkResult(solution.value, answer),
-                        answer
-                    )
+                    else -> {
+                        Output.Solving.printVerification(
+                            isCorrect = checkResult(solution.value, answer),
+                            answer
+                        )
+                    }
                 }
             }
         } catch (error: NotImplementedError) {
