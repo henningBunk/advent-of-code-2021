@@ -66,7 +66,7 @@ interface FoldingOperation {
 }
 
 class FoldUp(private val y: Int) : FoldingOperation {
-    override fun invoke(paper: Paper): Paper = paper
+    override operator fun invoke(paper: Paper): Paper = paper
         .transpose()
         .let { FoldLeft(y)(it) }
         .transpose()
@@ -74,7 +74,7 @@ class FoldUp(private val y: Int) : FoldingOperation {
 }
 
 class FoldLeft(private val x: Int) : FoldingOperation {
-    override fun invoke(paper: Paper): Paper = paper
+    override operator fun invoke(paper: Paper): Paper = paper
         .map {
             it
                 .zip(it.reversed())
