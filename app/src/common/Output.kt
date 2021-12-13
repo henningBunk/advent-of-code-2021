@@ -28,13 +28,13 @@ object Output {
 
         private fun printFramed(text: String) {
             println(
-                """
-                    
-                    ${"".padStart(text.length + 18, '#')}
-                    #####    $text    #####
-                    ${"".padStart(text.length + 18, '#')}
-                    
-                    """.trimIndent()
+            """
+            |
+            |        ${"".padStart(text.length + 18, '#')}
+            |        #####    $text    #####
+            |        ${"".padStart(text.length + 18, '#')}
+            |
+            |""".trimMargin()
             )
         }
 
@@ -50,15 +50,15 @@ object Output {
             sampleAnswer: Any,
             sampleResult: Any
         ) = println(
-            """|
-                   |❌ Oh no! Your solution for part ${part.value} did not return the expected answer for the sample input.
-                   |
-                   |Your sample input:
-                   |$sampleInput
-                   |
-                   |Expected result: $sampleAnswer
-                   |Actual result:   $sampleResult   
-                """.trimMargin()
+            """
+            |
+            |❌ Oh no! Your solution for part ${part.value} did not return the expected answer for the sample input.
+            |
+            |Your sample input:
+            |$sampleInput
+            |
+            |Expected result: ${formatSolution(sampleAnswer)}
+            |Actual result:   ${formatSolution(sampleResult)}""".trimMargin()
         )
 
         fun printStartSolving() = println("Start solving...\n")
@@ -66,9 +66,8 @@ object Output {
         @OptIn(ExperimentalTime::class)
         fun printResults(solution: TimedValue<Any>) = println(
             """
-                    👉 Your solution is: ${formatSolution(solution.value)}
-                    ⏱ Calculating it took ${solution.duration.toString(DurationUnit.MILLISECONDS, 2)}
-                """.trimIndent()
+            |👉 Your solution is: ${formatSolution(solution.value)}
+            |⏱ Calculating it took ${solution.duration.toString(DurationUnit.MILLISECONDS, 2)}""".trimMargin()
         )
 
         private fun formatSolution(value: Any): String = when {
