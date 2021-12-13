@@ -82,10 +82,10 @@ object Output {
                 ✉️ Do you want to submit your answer to adventofcode.com? [Y/n]:""".trimIndent()
         )
 
-        fun printVerification(isCorrect: Boolean, answer: Any?) = println(
+        fun printVerification(isCorrect: Boolean, answer: Any) = println(
             when {
                 isCorrect -> "✅ Your solution is correct!"
-                else -> "❌ But sadly this is wrong. The real answer would be $answer"
+                else -> "❌ But sadly this is wrong. The real answer would be ${formatSolution(answer)}"
             }
         )
 
