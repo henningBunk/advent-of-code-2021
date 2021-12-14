@@ -73,6 +73,12 @@ abstract class CreateDayTask : DefaultTask() {
             } ?: 0
         }
 
+    @get:OutputDirectory
+    abstract val templateDir: DirectoryProperty
+
+    @get:OutputDirectory
+    abstract val destination: DirectoryProperty
+
     @get:Inject
     abstract val fs: FileSystemOperations
 
@@ -81,14 +87,14 @@ abstract class CreateDayTask : DefaultTask() {
         val days = if (_day != 0) listOf(_day) else (1..25)
         days.forEach { thisDay ->
             val dayString = String.format("%02d", thisDay)
-            val dest = "src/y$_year/day$dayString"
+            val finalDestination = destination.get().dir("y$_year/day$dayString")
 
-            if(project.file(dest).exists()) {
+            if(project.file(finalDestination).exists()) {
                 println("There already is a folder for $year day $thisDay. Skipping.")
             } else {
                 fs.copy {
-                    from(".template")
-                    into(dest)
+                    from(templateDir)
+                    into(finalDestination)
                     rename("XY", dayString)
                     expand("YEAR" to "$_year", "DAY" to dayString)
                 }
@@ -101,4 +107,6 @@ abstract class CreateDayTask : DefaultTask() {
 tasks.register<CreateDayTask>("create") {
     group = "Advent of Code"
     description = "Generates new files for you to work in. Define the year and day with '--year=2021 --day=8'. If the day is omitted, all 25 days are created."
+    templateDir.set(File(".template"))
+    destination.set(File("src"))
 }
