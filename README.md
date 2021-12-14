@@ -69,6 +69,10 @@ Nothing special today. I like the solution of putting the octopus in a map with 
 ###  [Day 24](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day24/Day24.kt)
 ###  [Day 25](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day25/Day25.kt)
 
+## Usage
+* To create a new day execute `./gradlew create --year=2021 --day=9`
+* To create all days for a year execute `./gradlew create --year=2021`
+
 ## Thanks
 This repo was build using inspiration from these repositories which I am thankful for:
 * https://gitlab.com/martyschaer/advent-of-code-complete
