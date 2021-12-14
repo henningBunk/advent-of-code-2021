@@ -3,11 +3,6 @@ plugins {
     application
 }
 
-println(rootProject.buildDir)
-//project.buildDir = File("app")
-
-
-
 repositories {
     mavenCentral()
 }
@@ -25,7 +20,6 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-
 }
 
 tasks.getByName<Delete>("clean") {
@@ -47,4 +41,64 @@ tasks {
             java.srcDirs("src")
         }
     }
+}
+
+abstract class CreateDayTask : DefaultTask() {
+
+    private var _year: Int = 0
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    var year: String?
+        @Input get() = _year.toString()
+        @Option(
+            option = "year",
+            description = "Which year should be created. When paired with '--day', only that day is created. Without it, every day gets created."
+        )
+        set(value) {
+            _year = value?.toInt() ?: 0
+        }
+
+    private var _day: Int = 0
+
+    @Suppress("MemberVisibilityCanBePrivate")
+    var day: String?
+        @Input get() = _day.toString()
+        @Option(
+            option = "day",
+            description = "Which day should be created. Range is 1-25. Must be combined with '--year'"
+        )
+        set(value) {
+            _day = value?.toInt()?.also {
+                if (it < 1 || it > 25) throw IllegalArgumentException("Please give a day between 1 and 25")
+            } ?: 0
+        }
+
+    @get:Inject
+    abstract val fs: FileSystemOperations
+
+    @TaskAction
+    fun create() {
+        val days = if (_day != 0) listOf(_day) else (1..25)
+        days.forEach { thisDay ->
+            val dayString = String.format("%02d", thisDay)
+            val dest = "src/y$_year/day$dayString"
+
+            if(project.file(dest).exists()) {
+                println("There already is a folder for $year day $thisDay. Skipping.")
+            } else {
+                fs.copy {
+                    from(".template")
+                    into(dest)
+                    rename("XY", dayString)
+                    expand("YEAR" to "$_year", "DAY" to dayString)
+                }
+                println("Created files for $_year day $thisDay. Have fun!")
+            }
+        }
+    }
+}
+
+tasks.register<CreateDayTask>("create") {
+    group = "Advent of Code"
+    description = "Generates new files for you to work in. Define the year and day with '--year=2021 --day=8'. If the day is omitted, all 25 days are created."
 }
