@@ -48,7 +48,7 @@ tasks {
 
 tasks.register<CreateDayTask>("create") {
     group = "Advent of Code"
-    description = "Generates new files for you to work in. Define the year and day with '--year=2021 --day=8'. If the day is omitted, all 25 days are created."
+    description = "Generates new files for you to work in. Define the year and day with '--year=2021 --day=8'. If the day is omitted, all 25 days are created. If the year is omitted, the current year is used."
     templateDir.set(File(".template"))
     destination.set(File("src"))
 }
