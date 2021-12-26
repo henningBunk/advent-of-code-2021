@@ -6,6 +6,7 @@ build
 
 # properties where you could store your session cookie
 gradle.properties
+app/src/config.kt
 
 # Downloaded input
 input
