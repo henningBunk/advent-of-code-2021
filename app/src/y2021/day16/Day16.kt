@@ -2,7 +2,6 @@ package y2021.day16
 
 import common.*
 import common.annotations.AoCPuzzle
-import javax.xml.stream.events.Characters
 
 fun main(args: Array<String>) {
     Day16().solveThem()
@@ -10,15 +9,13 @@ fun main(args: Array<String>) {
 
 @AoCPuzzle(2021, 16)
 class Day16 : AocSolution {
-    override val answers = Answers(samplePart1 = 31, samplePart2 = -1)
+    override val answers = Answers(samplePart1 = 31, samplePart2 = 54, part1 = 889, part2 = 739303923668)
 
-    override fun solvePart1(input: List<String>): Any {
-        TODO()
-    }
+    override fun solvePart1(input: List<String>): Any =
+        BitsPacket(input.first().hexToBinary()).versionSum
 
-    override fun solvePart2(input: List<String>): Any {
-        TODO()
-    }
+    override fun solvePart2(input: List<String>): Any =
+        BitsPacket(input.first().hexToBinary()).value
 }
 
 fun String.hexToBinary(): String = this.map {
@@ -32,16 +29,35 @@ fun String.hexToBinary(): String = this.map {
 class BitsPacket(private val binary: String) {
 
     val version: Int = binary
-        .substring(0, 3)
+        .substring(versionLengthStartIndex, versionLengthEndIndex + 1)
         .toInt(2)
 
     val typeId: Int = binary
-        .substring(3, 6)
+        .substring(typeIdLengthStartIndex, typeIdLengthEndIndex + 1)
         .toInt(2)
 
     val type: PacketType = when (typeId) {
         4 -> parseLiteralValue()
         else -> parseOperatorPacket()
+    }
+
+    val versionSum: Int = when (type) {
+        is Literal -> version
+        is Operator -> version + type.subPackets.sumOf { it.versionSum }
+    }
+
+    val value: Long = when (type) {
+        is Literal -> type.value
+        is Operator -> when(typeId) {
+            0 -> type.subPackets.sumOf { it.value }
+            1 -> type.subPackets.fold(1) { product, next -> product * next.value}
+            2 -> type.subPackets.minOf { it.value }
+            3 -> type.subPackets.maxOf { it.value }
+            5 -> if (type.subPackets[0].value > type.subPackets[1].value) 1 else 0
+            6 -> if (type.subPackets[0].value < type.subPackets[1].value) 1 else 0
+            7 -> if (type.subPackets[0].value == type.subPackets[1].value) 1 else 0
+            else -> error("this operation is not supported")
+        }
     }
 
     private fun parseLiteralValue(): Literal = binary
@@ -55,41 +71,83 @@ class BitsPacket(private val binary: String) {
                 size += 5
                 if (chunk[0] == '0') break
             }
-            Literal(literal.toInt(2), size)
+            Literal(literal.toLong(2), size)
         }
 
     private fun parseOperatorPacket(): Operator {
-        val lengthTypeId = Character.getNumericValue(binary[6])
-        val subPacketLength = binary.substring(7, 22).toInt(2)
+        val lengthTypeId = Character.getNumericValue(binary[lengthTypeIdIndex])
+        return when (lengthTypeId) {
+            0 -> parseLengthType0()
+            1 -> parseLengthType1()
+            else -> error("unsupported length type id: $lengthTypeId")
+        }
+    }
 
-        // todo parse the two literal subpackets
+    private fun parseLengthType0(): Operator {
+        val subPacketLength = binary
+            .substring(type0subPacketLengthStartIndex, type0subPacketLengthEndIndex + 1)
+            .toInt(2)
 
-        return Operator(lengthTypeId, subPacketLength, 0)
+        val subPackets: MutableList<BitsPacket> = mutableListOf()
+        var nextSubPacketStart = type0firstSubPacketStartIndex
+        do {
+            BitsPacket(binary.substring(nextSubPacketStart))
+                .let {
+                    subPackets.add(it)
+                    nextSubPacketStart += it.type.size
+                }
+        } while (type0firstSubPacketStartIndex + subPacketLength - nextSubPacketStart > 6)
+
+        return Operator(
+            lengthTypeId = 0,
+            size = nextSubPacketStart,
+            subPackets = subPackets.toTypedArray()
+        )
+    }
+
+    private fun parseLengthType1(): Operator {
+        val subPacketsAmount = binary
+            .substring(type1subPacketAmountStartIndex, type1subPacketAmountEndIndex + 1)
+            .toInt(2)
+
+        val subPackets: MutableList<BitsPacket> = mutableListOf()
+        var nextSubPacketStart = type1firstSubPacketStartIndex
+        repeat(subPacketsAmount) {
+            BitsPacket(binary.substring(nextSubPacketStart))
+                .let {
+                    subPackets.add(it)
+                    nextSubPacketStart += it.type.size
+                }
+        }
+
+        return Operator(
+            lengthTypeId = 1,
+            size = nextSubPacketStart,
+            subPackets = subPackets.toTypedArray()
+        )
+    }
+
+    companion object {
+        const val versionLengthStartIndex = 0
+        const val versionLengthEndIndex = 2
+        const val typeIdLengthStartIndex = 3
+        const val typeIdLengthEndIndex = 5
+        const val lengthTypeIdIndex = 6
+
+        const val type0subPacketLengthStartIndex = 7
+        const val type0subPacketLengthEndIndex = 21
+        const val type0firstSubPacketStartIndex = 22
+
+        const val type1subPacketAmountStartIndex = 7
+        const val type1subPacketAmountEndIndex = 17
+        const val type1firstSubPacketStartIndex = 18
     }
 }
 
 sealed class PacketType(val size: Int)
-class Literal(val value: Int, size: Int) : PacketType(size)
+class Literal(val value: Long, size: Int) : PacketType(size)
 class Operator(
     val lengthTypeId: Int,
-    val subPacketLength: Int,
     size: Int,
     vararg val subPackets: BitsPacket,
 ) : PacketType(size)
-
-//0 = 0000
-//1 = 0001
-//2 = 0010
-//3 = 0011
-//4 = 0100
-//5 = 0101
-//6 = 0110
-//7 = 0111
-//8 = 1000
-//9 = 1001
-//A = 1010
-//B = 1011
-//C = 1100
-//D = 1101
-//E = 1110
-//F = 1111
