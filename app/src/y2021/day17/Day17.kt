@@ -2,6 +2,7 @@ package y2021.day17
 
 import common.*
 import common.annotations.AoCPuzzle
+import helper.Point
 
 fun main(args: Array<String>) {
     Day17().solveThem()
@@ -19,3 +20,5 @@ class Day17 : AocSolution {
         TODO()
     }
 }
+
+class Probe(var velocity: Point)

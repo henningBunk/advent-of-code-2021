@@ -3,6 +3,7 @@ package y2021.day05
 import common.Answers
 import common.AocSolution
 import common.annotations.AoCPuzzle
+import helper.Point
 import kotlin.math.sign
 
 typealias VentMap = List<MutableList<Int>>
@@ -62,11 +63,6 @@ fun VentMap.drawLine(line: Line) {
         current += direction
     }
     addVent(to)
-}
-
-data class Point(val x: Int, val y: Int) {
-    operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
-    operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
 }
 
 data class Line(val a: Point, val b: Point) {

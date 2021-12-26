@@ -1,5 +1,6 @@
 package y2021.day05
 
+import helper.Point
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
