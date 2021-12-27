@@ -94,6 +94,3 @@ class Image(
         const val WHITE = '#'
     }
 }
-
-
-
