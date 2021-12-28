@@ -6,11 +6,11 @@ import common.annotations.AoCPuzzle
 import java.security.InvalidKeyException
 
 fun main(args: Array<String>) {
-    Day02().solveThem()
+    Day02Dive().solveThem()
 }
 
 @AoCPuzzle(2021, 2)
-class Day02 : AocSolution {
+class Day02Dive : AocSolution {
     override val answers = Answers(samplePart1 = 150, samplePart2 = 900, part1 = 1670340, part2 = 1954293920)
 
     override fun solvePart1(input: List<String>): Int = input

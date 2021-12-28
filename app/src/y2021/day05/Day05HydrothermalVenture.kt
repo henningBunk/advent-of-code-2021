@@ -10,11 +10,11 @@ typealias VentMap = List<MutableList<Int>>
 
 
 fun main(args: Array<String>) {
-    Day05().solveThem()
+    Day05HydrothermalVenture().solveThem()
 }
 
 @AoCPuzzle(2021, 5)
-class Day05 : AocSolution {
+class Day05HydrothermalVenture : AocSolution {
     override val answers = Answers(samplePart1 = 5, samplePart2 = 12, part1 = 7468, part2 = 22364)
 
     override fun solvePart1(input: List<String>): Any = input

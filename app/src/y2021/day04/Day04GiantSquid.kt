@@ -5,11 +5,11 @@ import common.AocSolution
 import common.annotations.AoCPuzzle
 
 fun main(args: Array<String>) {
-    Day04().solveThem()
+    Day04GiantSquid().solveThem()
 }
 
 @AoCPuzzle(2021, 4)
-class Day04 : AocSolution {
+class Day04GiantSquid : AocSolution {
     override val answers = Answers(samplePart1 = 4512, samplePart2 = 1924, part1 = 10680, part2 = 31892)
 
     override fun solvePart1(input: List<String>): Any {

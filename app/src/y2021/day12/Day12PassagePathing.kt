@@ -5,11 +5,11 @@ import common.AocSolution
 import common.annotations.AoCPuzzle
 
 fun main(args: Array<String>) {
-    Day12().solveThem()
+    Day12PassagePathing().solveThem()
 }
 
 @AoCPuzzle(2021, 12)
-class Day12 : AocSolution {
+class Day12PassagePathing : AocSolution {
     override val answers = Answers(samplePart1 = 19, samplePart2 = 103, part1 = 3887, part2 = 104834)
 
     lateinit var caves: Map<String, List<String>>

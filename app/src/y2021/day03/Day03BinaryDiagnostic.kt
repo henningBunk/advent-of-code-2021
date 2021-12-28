@@ -6,11 +6,11 @@ import common.annotations.AoCPuzzle
 import transpose
 
 fun main(args: Array<String>) {
-    Day03().solveThem()
+    Day03BinaryDiagnostic().solveThem()
 }
 
 @AoCPuzzle(2021, 3)
-class Day03 : AocSolution {
+class Day03BinaryDiagnostic : AocSolution {
     override val answers = Answers(samplePart1 = 198, samplePart2 = 230, part1 = 3687446, part2 = 4406844)
 
     override fun solvePart1(input: List<String>): Any {

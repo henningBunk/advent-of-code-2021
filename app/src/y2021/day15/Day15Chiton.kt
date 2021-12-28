@@ -5,11 +5,11 @@ import common.annotations.AoCPuzzle
 import kotlin.math.min
 
 fun main(args: Array<String>) {
-    Day15().solveThem(ignorePart1 = true)
+    Day15Chiton().solveThem(ignorePart1 = true)
 }
 
 @AoCPuzzle(2021, 15)
-class Day15 : AocSolution {
+class Day15Chiton : AocSolution {
     override val answers = Answers(samplePart1 = 40, samplePart2 = 315, part1 = 398)
 
     override fun solvePart1(input: List<String>): Any {

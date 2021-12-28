@@ -8,11 +8,11 @@ import kotlin.math.max
 import kotlin.math.sign
 
 fun main(args: Array<String>) {
-    Day17().solveThem()
+    Day17TrickShot().solveThem()
 }
 
 @AoCPuzzle(2021, 17)
-class Day17 : AocSolution {
+class Day17TrickShot : AocSolution {
     override val answers = Answers(samplePart1 = 45, samplePart2 = 112, part1 = 5050, part2 = 2223)
 
     override fun solvePart1(input: List<String>): Any {

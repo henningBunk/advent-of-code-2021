@@ -6,11 +6,11 @@ import common.annotations.AoCPuzzle
 import kotlin.math.abs
 
 fun main(args: Array<String>) {
-    Day07().solveThem()
+    Day07TheTreacheryOfWhales().solveThem()
 }
 
 @AoCPuzzle(2021, 7)
-class Day07 : AocSolution {
+class Day07TheTreacheryOfWhales : AocSolution {
     override val answers = Answers(samplePart1 = 37, samplePart2 = 168, part1 = 352254, part2 = 99053143)
 
     override fun solvePart1(input: List<String>): Any = calculateTotalFuelCosts(

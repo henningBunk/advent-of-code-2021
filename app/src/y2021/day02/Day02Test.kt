@@ -12,7 +12,7 @@ class Day02Test : FreeSpec({
         "part 1 should return the correct value" - {
             "for the sample input" {
                 println(System.getProperty("user.dir"))
-                Day02().solvePart1(repo.getSample(2021, 2)) shouldBe Day02().answers.samplePart1
+                Day02Dive().solvePart1(repo.getSample(2021, 2)) shouldBe Day02Dive().answers.samplePart1
             }
 
             "for the real input" {

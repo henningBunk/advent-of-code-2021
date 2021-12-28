@@ -8,11 +8,11 @@ typealias PolymerLut = Map<String, List<String>>
 typealias PolymerFrequency = Map<String, Long>
 
 fun main(args: Array<String>) {
-    Day14().solveThem()
+    Day14ExtendedPolymerization().solveThem()
 }
 
 @AoCPuzzle(2021, 14)
-class Day14 : AocSolution {
+class Day14ExtendedPolymerization : AocSolution {
     override val answers = Answers(samplePart1 = 1588, samplePart2 = 2188189693529, part1 = 2797, part2 = 2926813379532)
 
     override fun solvePart1(input: List<String>): Long {

@@ -5,11 +5,11 @@ import common.AocSolution
 import common.annotations.AoCPuzzle
 
 fun main(args: Array<String>) {
-    Day06().solveThem()
+    Day06Lanternfish().solveThem()
 }
 
 @AoCPuzzle(year = 2021, day = 6)
-class Day06 : AocSolution {
+class Day06Lanternfish : AocSolution {
     override val answers = Answers(samplePart1 = 5934, samplePart2 = 26984457539, part1 = 355386, part2 = 1613415325809)
 
     override fun solvePart1(input: List<String>): Any =

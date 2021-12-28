@@ -6,11 +6,11 @@ import common.annotations.AoCPuzzle
 
 
 fun main(args: Array<String>) {
-    Day10().solveThem()
+    Day10SyntaxScoring().solveThem()
 }
 
 @AoCPuzzle(2021, 10)
-class Day10 : AocSolution {
+class Day10SyntaxScoring : AocSolution {
     override val answers = Answers(samplePart1 = 26397, samplePart2 = 288957, part1 = 392367, part2 = 2192104158)
 
     override fun solvePart1(input: List<String>): Any = input

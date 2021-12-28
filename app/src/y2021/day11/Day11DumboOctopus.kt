@@ -6,11 +6,11 @@ import common.annotations.AoCPuzzle
 import kotlin.properties.Delegates
 
 fun main(args: Array<String>) {
-    Day11().solveThem()
+    Day11DumboOctopus().solveThem()
 }
 
 @AoCPuzzle(2021, 11)
-class Day11 : AocSolution {
+class Day11DumboOctopus : AocSolution {
     override val answers = Answers(samplePart1 = 1656, samplePart2 = 195, part1 = 1571, part2 = 387)
 
     override fun solvePart1(input: List<String>): Any {

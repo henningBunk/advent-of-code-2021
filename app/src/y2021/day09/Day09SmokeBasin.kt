@@ -7,11 +7,11 @@ typealias CaveMap = List<MutableList<Int>>
 typealias CaveQueue = MutableList<Pair<Int, Int>>
 
 fun main(args: Array<String>) {
-    Day09().solveThem()
+    Day09SmokeBasin().solveThem()
 }
 
 @AoCPuzzle(2021, 9)
-class Day09 : AocSolution {
+class Day09SmokeBasin : AocSolution {
     override val answers = Answers(samplePart1 = 15, samplePart2 = 1134, part1 = 516, part2 = 1023660)
 
     override fun solvePart1(input: List<String>): Any = input

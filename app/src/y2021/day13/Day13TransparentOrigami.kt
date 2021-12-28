@@ -9,14 +9,14 @@ import kotlin.math.abs
 typealias Paper = List<List<Boolean>>
 
 fun main(args: Array<String>) {
-    Day13().solveThem(
+    Day13TransparentOrigami().solveThem(
         ignoreSamples = false,
         ignoreRealInput = false,
     )
 }
 
 @AoCPuzzle(2021, 13)
-class Day13 : AocSolution {
+class Day13TransparentOrigami : AocSolution {
     override val answers = Answers(
         samplePart1 = 17,
         part1 = 731,
