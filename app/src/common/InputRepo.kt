@@ -13,7 +13,7 @@ class InputRepo {
     private val sessionCookie: String = Config.SESSION_COOKIE
 
     fun get(year: Int, day: Int): List<String> {
-        val file = File("input/$year-$day.txt")
+        val file = File("app/src/y$year/day${day.toString().padStart(2, '0')}/input.txt")
         return when {
             file.exists() -> {
                 Output.InputRepo.printFromCache(year, day)

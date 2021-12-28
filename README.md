@@ -35,7 +35,7 @@ Pretty happy with this one since it only took me only a few minutes and both tes
 I wonder if I there is a sigma operand for the second calculation, I feel like there should be one.   
 Also, the runtime is pretty slow since it's a brute force approach. ~~But right now I don't feel like optimizing.~~ Found the trick with the triangle numbers. Which reduced the runtime from 5s to 100ms, not using higher order function reduced it further to 30ms.
 
-###  [Day 8: Seven Segment Search](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day08/Day08SevenSegmentSearch.kt) / [Much cleaner solution](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day08/Day08_second_try.kt)
+###  [Day 8: Seven Segment Search](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day08/Day08SevenSegmentSearch.kt) / [Much cleaner solution](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day08/Day08WithoutAnalyzingIndividualSegments.kt)
 I struggled with this one. I chose the wrong datatype to store my remaining candidates for each segment. I used an array of strings and for the operations I used char arrays. Here I got hugely confused with Kotlin's Array<Char> and CharArray. Afterwards I read the docs and am wiser now :)
 I refactored my solution now that it is easier to read and more concise but it is still my original logic. I would like to implement it again using sets because I think that's way more appropriate. Also would like to test out a solution of a colleague who didn't decode the pattern but immediately determined the value of the codes.
 
@@ -43,12 +43,12 @@ Great and interesting day!
 
 // edit:  
 Tried it again using a map and the approach of my colleague not to decode each segment by itself but rather the numbers as a whole. SO. MUCH. EASIER!
-See: https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day08/Day08_second_try.kt
+See: https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day08/Day08WithoutAnalyzingIndividualSegments.kt
 
 ###  [Day 9: Smoke Basin](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day09/Day09SmokeBasin.kt)
 Simple solution with a queue.
 
-###  [Day 10: Syntax Scoring](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day10/Day10SyntaxScoring.kt) / [Tests](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day10/Day10.kt)
+###  [Day 10: Syntax Scoring](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day10/Day10SyntaxScoring.kt) / [Tests](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day10/Day10Test.kt)
 Solved this one with my colleague using Ping-Pong-TDD-Pair-Programming. Great practice and lots of fun :)
 
 ###  [Day 11: Dumbo Octopus](https://github.com/henningBunk/advent-of-code-2021/blob/main/app/src/y2021/day11/Day11DumboOctopus.kt)
